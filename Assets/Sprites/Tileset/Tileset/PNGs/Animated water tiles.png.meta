@@ -42,7 +42,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -127,7 +127,217 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Animated water tiles_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 448
+        height: 448
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23bf691e67e2ea148978cb51e6df56c7
+      internalID: -547987414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Animated water tiles_1
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 0
+        width: 448
+        height: 448
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2ece52b82be7254e8822e463dd87b19
+      internalID: 293656529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Animated water tiles_2
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 0
+        width: 448
+        height: 448
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eeea32af2e81aee4b92c7b0b470dd211
+      internalID: 1550720519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Animated water tiles_3
+      rect:
+        serializedVersion: 2
+        x: 1344
+        y: 0
+        width: 448
+        height: 448
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ac7440700517894dbd667c16be25e7f
+      internalID: 114229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Animated water tiles_4
+      rect:
+        serializedVersion: 2
+        x: 1792
+        y: 0
+        width: 448
+        height: 448
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d44bd210d5027bc46b24959289174b11
+      internalID: 502019442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Animated water tiles_5
+      rect:
+        serializedVersion: 2
+        x: 2240
+        y: 0
+        width: 448
+        height: 448
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 815d5897e30a9a2498304937540709b8
+      internalID: -1229997858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Animated water tiles_6
+      rect:
+        serializedVersion: 2
+        x: 2688
+        y: 0
+        width: 448
+        height: 448
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e4657735ca018c4d8a08a4152e2135e
+      internalID: -967326077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Animated water tiles_7
+      rect:
+        serializedVersion: 2
+        x: 3136
+        y: 0
+        width: 448
+        height: 448
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d92c7c60d4bdcc49876a84de32975aa
+      internalID: -726264435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Animated water tiles_8
+      rect:
+        serializedVersion: 2
+        x: 3584
+        y: 0
+        width: 448
+        height: 448
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ddde62915a412947a43be0f9b0031fd
+      internalID: 1303664219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Animated water tiles_9
+      rect:
+        serializedVersion: 2
+        x: 4032
+        y: 0
+        width: 448
+        height: 448
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19c73952d32760e41913fc9a15151d54
+      internalID: 1430852844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -138,7 +348,17 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Animated water tiles_7: -726264435
+      Animated water tiles_2: 1550720519
+      Animated water tiles_5: -1229997858
+      Animated water tiles_4: 502019442
+      Animated water tiles_8: 1303664219
+      Animated water tiles_0: -547987414
+      Animated water tiles_6: -967326077
+      Animated water tiles_1: 293656529
+      Animated water tiles_3: 114229
+      Animated water tiles_9: 1430852844
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
