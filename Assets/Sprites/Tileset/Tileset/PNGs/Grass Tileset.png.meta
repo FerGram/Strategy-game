@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -44,7 +44,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -2635,20 +2635,20 @@ TextureImporter:
       Grass Tileset_16: -132245647
       Grass Tileset_13: 1508776524
       Grass Tileset_63: 1343604498
-      Grass Tileset_66: 2019012724
       Grass Tileset_67: 139381361
       Grass Tileset_17: -1933977058
+      Grass Tileset_66: 2019012724
       Grass Tileset_3: -320922999
       Grass Tileset_38: 1381648157
-      Grass Tileset_96: -1280898084
       Grass Tileset_84: 509498966
-      Grass Tileset_87: -445318660
+      Grass Tileset_96: -1280898084
       Grass Tileset_6: 1295963105
       Grass Tileset_68: -1436337683
       Grass Tileset_91: -962358464
+      Grass Tileset_87: -445318660
       Grass Tileset_32: 656968821
-      Grass Tileset_99: -2037061842
       Grass Tileset_72: -1913365708
+      Grass Tileset_99: -2037061842
       Grass Tileset_89: 393945481
       Grass Tileset_59: 1099197038
       Grass Tileset_54: 1960372831
