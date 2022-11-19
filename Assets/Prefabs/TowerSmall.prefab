@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7527304295923298204}
   - component: {fileID: 7453984760201280357}
   m_Layer: 0
-  m_Name: "TorrePeque\xF1a"
+  m_Name: TowerSmall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

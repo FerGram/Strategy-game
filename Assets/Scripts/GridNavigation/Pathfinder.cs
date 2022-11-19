@@ -22,13 +22,13 @@ public class Pathfinder : MonoBehaviour
         _grid = new Grid(_gridWidthResolution, _gridHeightResolution, _gridNodeSize, _showGrid);
     }
 
-    public List<Node> GetPath(Rigidbody agent, Transform endPos)
+    public List<Node> GetPath(Rigidbody2D rb, Transform endPos)
     {
-        return GetPath(agent, endPos.position);
+        return GetPath(rb, new Vector2(endPos.position.x, endPos.position.y));
     }
-    public List<Node> GetPath(Rigidbody agent, Vector3 endPos)
+    public List<Node> GetPath(Rigidbody2D rb, Vector2 endPos)
     {
-        _startNode = GetClosestNodeToPosition(agent.position);
+        _startNode = GetClosestNodeToPosition(rb.position);
         _endNode = GetClosestNodeToPosition(endPos);
 
         List<Node> path = Algorithm.BFSAlgorithm(_grid, _startNode, _endNode);
@@ -46,7 +46,7 @@ public class Pathfinder : MonoBehaviour
         return null;
     }
 
-    private Node GetClosestNodeToPosition(Vector3 pos)
+    private Node GetClosestNodeToPosition(Vector2 pos)
     {
         float minDistance = Mathf.Infinity;
         Node closest = null;
@@ -60,7 +60,7 @@ public class Pathfinder : MonoBehaviour
 
                 Node currentNode = _grid.GetNodeAt(i, j);
                 Vector3 nodePos = currentNode.GetPosition();
-                float distanceSquaredToPos = Mathf.Pow(pos.x - nodePos.x, 2) + Mathf.Pow(pos.z - nodePos.z, 2);
+                float distanceSquaredToPos = Mathf.Pow(pos.x - nodePos.x, 2) + Mathf.Pow(pos.y - nodePos.y, 2);
                 if (currentNode != null && distanceSquaredToPos < minDistance)
                 {
                     closest = currentNode;
@@ -68,8 +68,7 @@ public class Pathfinder : MonoBehaviour
                 }
             }
         }
+
         return closest;
     }
-
-    
 }

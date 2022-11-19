@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 public class Node
 {
-    private Vector3 _nodePosition;
+    private Vector2 _nodePosition;
     private List<Node> _neighbours;
     private Node _cameFromNode;
 
     private bool _isWallNode = false;
 
-    public Node(Vector3 position, float size)
+    public Node(Vector2 position, float size)
     {
         _nodePosition = position;
         _neighbours = new List<Node>();
@@ -20,14 +20,13 @@ public class Node
 
     private void DetermineWallNode(float size)
     {
-        //Check if any collider hitting a PhysicsBox with the size of the node (and 0.1f for the 3rd dimension)
-        if (Physics.CheckBox(_nodePosition, new Vector3(size / 2, 0.1f, size /  2), Quaternion.identity, -1, QueryTriggerInteraction.Ignore))
+        if (Physics2D.OverlapBox(_nodePosition, new Vector2(size / 2, size /  2), 0))
         {
             _isWallNode = true;
         }
     }
 
-    public Vector3 GetPosition() => _nodePosition;
+    public Vector2 GetPosition() => _nodePosition;
 
     public List<Node> GetNeighbours() => _neighbours;
 

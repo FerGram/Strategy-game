@@ -4,56 +4,71 @@ using UnityEngine;
 
 public class Agent : MonoBehaviour
 {
-    protected void StartNavigation(Rigidbody agent, List<Node> path, float speed, float stoppingNodeDistance, float rotationSpeed)
+    [SerializeField] protected float _speed = 3f;
+    [SerializeField] protected float _stoppingNodeDistance = 0.3f;
+
+    [Header("Navigation")]
+    [SerializeField] protected Pathfinder _pathfinder;
+
+
+    protected void StartNavigation(Rigidbody2D rb, Transform to)
     {
         CancelNavigation();
-        if (path != null) StartCoroutine(NavigationRoutine(agent, path, speed, stoppingNodeDistance, rotationSpeed));
+
+        rb.velocity = Vector2.zero;
+        List<Node> path = _pathfinder.GetPath(rb, to);
+
+        if (path != null) StartCoroutine(NavigationRoutine(rb, path, _speed, _stoppingNodeDistance));
+    }
+    protected void StartNavigation(Rigidbody2D rb, Vector2 to)
+    {
+        CancelNavigation();
+
+        rb.velocity = Vector2.zero;
+        List<Node> path = _pathfinder.GetPath(rb, to);
+
+        if (path != null) StartCoroutine(NavigationRoutine(rb, path, _speed, _stoppingNodeDistance));
     }
 
-    IEnumerator NavigationRoutine(Rigidbody agent, List<Node> path, float speed, float stoppingNodeDistance, float rotationSpeed)
+    IEnumerator NavigationRoutine(Rigidbody2D agent, List<Node> path, float speed, float stoppingNodeDistance)
     {
-        Quaternion targetRotation = agent.transform.localRotation;
+        /*
+         *  NOTE: the rotation code is commented. At the time of writing, we won't rotate in 2D.
+         */
+
+        //Quaternion targetRotation = agent.transform.localRotation;
         while (path.Count > 0)
         {
-            Vector3 agentPos = agent.position;
-            Vector3 nodePos = path[0].GetPosition();
+            Vector2 agentPos = agent.position;
+            Vector2 nodePos = path[0].GetPosition();
 
-            agentPos.y = 0;
-            nodePos.y = 0;
-
-            while (Vector3.Distance(agentPos, nodePos) > stoppingNodeDistance)
+            while (Vector2.Distance(agent.position, path[0].GetPosition()) > stoppingNodeDistance)
             {
                 //Move towards next node
-                Vector3 movementDir = path[0].GetPosition() - agent.position;
+                Vector2 movementDir = path[0].GetPosition() - agent.position;
                 agent.velocity = movementDir.normalized * speed;
-                agent.velocity = new Vector3(agent.velocity.x, 0, agent.velocity.z);
 
-                //Finished rotation
-                if (Quaternion.Angle(agent.rotation, targetRotation) < 0.01f)
-                {
-                    Vector3 targetLook = (nodePos - agentPos);
-
-                    if (Mathf.Abs(targetLook.x) > Mathf.Abs(targetLook.z)) targetLook.z = 0;
-                    else targetLook.x = 0;
-
-                    targetLook = targetLook.normalized;
-
-                    targetRotation = Quaternion.LookRotation(targetLook, Vector3.up);
-                }
-                Quaternion desiredRotation = Quaternion.RotateTowards(agent.transform.localRotation, targetRotation, Mathf.PI * rotationSpeed);
-                agent.transform.localRotation = desiredRotation;
                 yield return null;
 
-                agentPos = agent.position;
-                nodePos = path[0].GetPosition();
+                ////Finished rotation
+                //if (Quaternion.Angle(agent.rotation, targetRotation) < 0.01f)
+                //{
+                //    Vector3 targetLook = (nodePos - agentPos);
 
-                agentPos.y = 0;
-                nodePos.y = 0;
+                //    if (Mathf.Abs(targetLook.x) > Mathf.Abs(targetLook.z)) targetLook.z = 0;
+                //    else targetLook.x = 0;
+
+                //    targetLook = targetLook.normalized;
+
+                //    targetRotation = Quaternion.LookRotation(targetLook, Vector3.up);
+                //}
+                //Quaternion desiredRotation = Quaternion.RotateTowards(agent.transform.localRotation, targetRotation, Mathf.PI * rotationSpeed);
+                //agent.transform.localRotation = desiredRotation;
             }
             path.RemoveAt(0);
             yield return null;
         }
-        agent.velocity = Vector3.zero;
+        agent.velocity = Vector2.zero;
     }
 
     protected void CancelNavigation()

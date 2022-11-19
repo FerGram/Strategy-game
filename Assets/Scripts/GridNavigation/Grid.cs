@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-
 public class Grid
 {
     private int _width;         //Amount of horizontal nodes
