@@ -2,12 +2,12 @@
 
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.Collections;
 
 static class Algorithm
 {
     static public List<Node> BFSAlgorithm(Grid grid, Node start, Node end)
     {
-
         List<Node> visited = new List<Node>();
         Queue<Node> nodeQueue = new Queue<Node>();
 
