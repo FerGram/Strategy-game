@@ -53,9 +53,9 @@ static class Algorithm
         }
     }
 
-    static public void AStarAlgorithm(Grid grid, Node start, Node end)
+    static public List<Node> AStarAlgorithm(Grid grid, Node start, Node end)
     {
-
+        return null;
     }
 
     static private List<Node> GetPath(Node endNode)
