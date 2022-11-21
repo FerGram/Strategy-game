@@ -19,7 +19,8 @@ namespace BehaviourTree
                     case TreeNodeState.FAILURE:
                         continue;
                     case TreeNodeState.SUCCESS:
-
+                        state = TreeNodeState.SUCCESS;
+                        return state;
                     case TreeNodeState.RUNNING:
                         state = TreeNodeState.RUNNING;
                         return state;
