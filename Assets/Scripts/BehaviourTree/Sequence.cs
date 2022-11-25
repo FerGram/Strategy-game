@@ -12,6 +12,8 @@ namespace BehaviourTree
     //<summary/>
     public class Sequence : TreeNode
     {
+        public Sequence() : base() { }
+        public Sequence(List<TreeNode> children) : base(children) { }
         public override TreeNodeState Evaluate()
         {
             bool anyChildIsRunning = false;

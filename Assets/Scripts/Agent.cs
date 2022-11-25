@@ -9,13 +9,23 @@ public class Agent : MonoBehaviour
 
     [Header("Navigation")]
     [SerializeField] protected Pathfinder _pathfinder;
+    public Rigidbody2D rb;
 
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(gameObject.transform.position, GigantBT.rangeOfVision);
+    }
 
-    protected void StartNavigation(Rigidbody2D rb, Transform to)
+    public void StartNavigation(Rigidbody2D rb, Transform to)
     {
         StartNavigation(rb, new Vector2(to.position.x, to.position.y));
     }
-    protected void StartNavigation(Rigidbody2D rb, Vector2 to)
+    public void StartNavigation(Rigidbody2D rb, Vector2 to)
     {
         CancelNavigation();
 

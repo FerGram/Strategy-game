@@ -10,6 +10,8 @@ namespace BehaviourTree
     //<summary/>
     public class Selector : TreeNode
     {
+        public Selector() : base() { }
+        public Selector(List<TreeNode> children) : base(children) { }
         public override TreeNodeState Evaluate()
         {
             foreach (TreeNode node in children)
