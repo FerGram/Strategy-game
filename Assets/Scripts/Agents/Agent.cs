@@ -5,21 +5,20 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public abstract class Agent : MonoBehaviour
 {
+    public bool IsNavigating { get; private set; } = false;
+
     [SerializeField] protected float _speed = 3f;
     [SerializeField] protected float _stoppingNodeDistance = 0.3f;
 
     [Header("Navigation")]
     [SerializeField] protected Pathfinder _pathfinder;
+
     private Rigidbody2D _rb;
+    private Vector2 _currentTarget;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-    }
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(gameObject.transform.position, GigantBT.rangeOfVision);
     }
 
     public void StartNavigation(Transform to)
@@ -46,34 +45,46 @@ public abstract class Agent : MonoBehaviour
             else Debug.Log("LOG: Pathfinder found. Resuming execution...");
         }
 
-        StartCoroutine(NavigationRoutine(this._rb, to, _speed, _stoppingNodeDistance));
+        StartCoroutine(NavigationRoutine(to, _speed, _stoppingNodeDistance));
     }
 
-    IEnumerator NavigationRoutine(Rigidbody2D agent, Vector2 to, float speed, float stoppingNodeDistance)
+    public bool IsNavigatingTowards(Vector2 towards)
     {
-        List<Node> path = _pathfinder.GetPath(agent, to);
+        return IsNavigating && towards == _currentTarget;
+    }
+
+    IEnumerator NavigationRoutine(Vector2 to, float speed, float stoppingNodeDistance)
+    {
+        List<Node> path = _pathfinder.GetPath(_rb, to);
 
         if (path != null)
         {
+            IsNavigating = true;
+            _currentTarget = to;
+
             while (path.Count > 0)
             {
-                while (Vector2.Distance(agent.position, path[0].GetPosition()) > stoppingNodeDistance)
+                while (Vector2.Distance(_rb.position, path[0].GetPosition()) > stoppingNodeDistance)
                 {
                     //Move towards next node
-                    Vector2 movementDir = path[0].GetPosition() - agent.position;
-                    agent.velocity = movementDir.normalized * speed;
+                    Vector2 movementDir = path[0].GetPosition() - _rb.position;
+                    _rb.velocity = movementDir.normalized * speed;
 
                     yield return null;
                 }
                 path.RemoveAt(0);
                 yield return null;
             }
-            agent.velocity = Vector2.zero;
+            _rb.velocity = Vector2.zero;
+
+            IsNavigating = false;
+            _currentTarget = Vector2.zero;
         }
     }
 
     public void CancelNavigation()
     {
         StopCoroutine(nameof(NavigationRoutine));
+        _rb.velocity = Vector2.zero;
     }
 }

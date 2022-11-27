@@ -4,18 +4,23 @@ using UnityEngine;
 using UnityEngine.UI;
 using BehaviourTree;
 
-//El agente patrullará hacia un punto determinado del mapa
+//El agente atacará el objetivo
 public class TaskAttackTarget : TreeNode
 {
     //Variables
-    private Agent _agent;
+    private float damage;
+    private float attackTime;
+    private Animator animator;
+
     private Tower tower;
-    private float _attackCounter = 0;
+    private float attackCounter = 0;
 
     //Constructor
-    public TaskAttackTarget(Agent agent)
+    public TaskAttackTarget(float dmg, float attackTime, Animator anim)
     {
-        _agent = agent;
+        damage = dmg;
+        animator = anim;
+        this.attackTime = attackTime;
     }
 
     public override TreeNodeState Evaluate()
@@ -23,16 +28,15 @@ public class TaskAttackTarget : TreeNode
         Transform _target = (Transform)GetData("target");
         if (_target != null)
         {
-
             tower = _target.GetComponentInChildren<Tower>();
-            GigantBT.animator.SetBool("IsAttacking", true);
-            GigantBT.animator.SetBool("IsWalking", false);
+            animator.SetBool("IsAttacking", true);
+            animator.SetBool("IsWalking", false);
            
-            _attackCounter += Time.deltaTime;
-            if(_attackCounter >= GigantBT.attackTime)
+            attackCounter += Time.deltaTime;
+            if(attackCounter >= attackTime)
             {
-                tower.TakeHit(GigantBT.damage);
-                _attackCounter = 0f;
+                tower.TakeHit(damage);
+                attackCounter = 0f;
 
             }
 
@@ -40,8 +44,8 @@ public class TaskAttackTarget : TreeNode
             {
                 ClearData("target");
                 //parent.parent.SetData("target", collision.transform);
-                GigantBT.animator.SetBool("IsAttacking", false);
-                GigantBT.animator.SetBool("IsWalking", true);
+                animator.SetBool("IsAttacking", false);
+                animator.SetBool("IsWalking", true);
 
             }
             

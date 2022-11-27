@@ -4,23 +4,23 @@ using UnityEngine;
 
 using BehaviourTree;
 
+[RequireComponent(typeof(Giant))]
 public class GigantBT : BehaviourTree.Tree
 {
-    //Variables globales
-    //public static float speed = 2f;
-    public static Agent agent;
-    public static Animator animator;
+    [Header("Stats")]
+    [SerializeField] float rangeOfVision = 1f;
+    [SerializeField] float damage = 1f;
+    [SerializeField] float attackTime = 2f;
 
     [Header("Targets")]
-    public static GameObject[] smallTowers;
-    public static GameObject kingTower;
-    public static bool smallTowerNotVisited;
-    public static bool kingTowerNotVisited;
+    private GameObject[] smallTowers;
+    private GameObject kingTower;
+    private bool smallTowerNotVisited;
+    private bool kingTowerNotVisited;
 
-    [Header("Stats")]
-    public static float rangeOfVision = 1f;
-    public static float damage = 1f;
-    public static float attackTime = 2f;
+    private Agent agent;
+    private Animator animator;
+
 
     private void Awake()
     {
@@ -37,23 +37,23 @@ public class GigantBT : BehaviourTree.Tree
         {
             new Sequence(new List<TreeNode>
             {
-                new CheckIsSmallTowerNotVisited(agent),
-                new TaskMoveToClosestTower(agent),
+                new CheckIsSmallTowerNotVisited(agent, rangeOfVision, smallTowerNotVisited),
+                new TaskMoveToClosestTower(agent, smallTowers, animator),
             }),
             new Sequence(new List<TreeNode>
             {
                 new CheckIsTowerAlive(),
-                new TaskAttackTarget(agent),
+                new TaskAttackTarget(damage, attackTime, animator),
             }),
             new Sequence(new List<TreeNode>
             {
-                new CheckIsKingTowerNotVisited(agent),
-                new TaskMoveToKingTower(agent),
+                new CheckIsKingTowerNotVisited(agent, rangeOfVision, kingTowerNotVisited),
+                new TaskMoveToKingTower(agent, kingTower, animator),
             }),
             new Sequence(new List<TreeNode>
             {
                 new CheckIsTowerAlive(),
-                new TaskAttackTarget(agent),
+                new TaskAttackTarget(damage, attackTime, animator),
             }),
 
         });

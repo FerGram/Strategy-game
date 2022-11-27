@@ -4,13 +4,5 @@ using UnityEngine;
 
 public class Giant : Agent
 {
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
+    //Inherit from abstract class Agent. If we want to add new non-behaviour functionality we can do it here.
 }

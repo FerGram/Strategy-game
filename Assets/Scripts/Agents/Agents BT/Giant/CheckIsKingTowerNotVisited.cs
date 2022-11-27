@@ -8,25 +8,29 @@ public class CheckIsKingTowerNotVisited : TreeNode
     //Variables
     private Agent _agent;
     public static int _objectsLayerMask = 1 << 6;
+    private float rangeOfVision;
+    private bool kingTowerNotVisited;
 
     //Constructor
-    public CheckIsKingTowerNotVisited(Agent agent)
+    public CheckIsKingTowerNotVisited(Agent agent, float rangeOfVision, bool kingTowerNotVisited)
     {
         _agent = agent;
+        this.rangeOfVision = rangeOfVision;
+        this.kingTowerNotVisited = kingTowerNotVisited;
     }
 
     public override TreeNodeState Evaluate()
     {
-        if (GigantBT.kingTowerNotVisited)
+        if (kingTowerNotVisited)
         {
-            Collider2D collision = Physics2D.OverlapCircle(_agent.gameObject.transform.position, GigantBT.rangeOfVision, _objectsLayerMask);
+            Collider2D collision = Physics2D.OverlapCircle(_agent.gameObject.transform.position, rangeOfVision, _objectsLayerMask);
             if (collision != null)
             {
                 if (collision.gameObject.tag == "KingTower")
                 {
                     parent.parent.SetData("target", collision.transform);
                     Debug.Log("torre grande detectada");
-                    GigantBT.kingTowerNotVisited = false;
+                    kingTowerNotVisited = false;
                     state = TreeNodeState.FAILURE;
                     return state;
                 }

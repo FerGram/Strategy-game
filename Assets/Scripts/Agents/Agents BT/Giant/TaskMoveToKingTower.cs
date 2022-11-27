@@ -6,21 +6,26 @@ using BehaviourTree;
 public class TaskMoveToKingTower : TreeNode
 {
     //Variables
-    private Agent _agent;
+    private Agent agent;
+    private Animator animator;
+    private GameObject kingTower;
 
     //Constructor
-    public TaskMoveToKingTower(Agent agent)
+    public TaskMoveToKingTower(Agent agent, GameObject kingTower, Animator anim)
     {
-        _agent = agent;
+        this.agent = agent;
+        this.kingTower = kingTower;
+        animator = anim;
     }
 
     public override TreeNodeState Evaluate()
     {
 
-            GigantBT.animator.SetBool("IsWalking", true);
-            GigantBT.animator.SetBool("IsAttacking", false);
-            
-            _agent.StartNavigation(GigantBT.kingTower.transform.GetChild(0)); 
+        animator.SetBool("IsWalking", true);
+        animator.SetBool("IsAttacking", false);
+
+        if (!agent.IsNavigatingTowards(kingTower.transform.GetChild(0).position))
+            agent.StartNavigation(kingTower.transform.GetChild(0));
 
         state = TreeNodeState.RUNNING;
         return state;

@@ -6,13 +6,15 @@ using BehaviourTree;
 public class CheckObjectInRange : TreeNode
 {
     //Variables
-    public static int _objectsLayerMask = 1 << 6; //Hacer una layer con los castillos, se podria usar otra con los enemigos para otros agentes(?
+    private int _objectsLayerMask = 1 << 6; //Hacer una layer con los castillos, se podria usar otra con los enemigos para otros agentes(?
     private Agent _agent;
+    private float _rangeOfVision;
 
     //Constructor
-    public CheckObjectInRange(Agent agent)
+    public CheckObjectInRange(Agent agent, float rangeOfVision)
     {
         _agent = agent;
+        _rangeOfVision = rangeOfVision;
     }
 
     public override TreeNodeState Evaluate()
@@ -20,7 +22,7 @@ public class CheckObjectInRange : TreeNode
         object t = GetData("target");
         if(t == null)
         {
-            Collider2D collision = Physics2D.OverlapCircle(_agent.gameObject.transform.position, GigantBT.rangeOfVision, _objectsLayerMask);
+            Collider2D collision = Physics2D.OverlapCircle(_agent.gameObject.transform.position, _rangeOfVision, _objectsLayerMask);
             if (collision != null)
             {
                 

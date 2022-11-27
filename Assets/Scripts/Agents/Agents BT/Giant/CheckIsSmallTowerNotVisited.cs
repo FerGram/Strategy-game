@@ -8,11 +8,15 @@ public class CheckIsSmallTowerNotVisited : TreeNode
     //Variables
     private Agent _agent;
     public static int _objectsLayerMask = 1 << 6; //Hacer una layer con los castillos, se podria usar otra con los enemigos para otros agentes(?
+    private bool smallTowerNotVisited;
+    private float rangeOfVision;
 
     //Constructor
-    public CheckIsSmallTowerNotVisited(Agent agent)
+    public CheckIsSmallTowerNotVisited(Agent agent, float rangeOfVision, bool smallTowerNotVisited)
     {
         _agent = agent;
+        this.smallTowerNotVisited = smallTowerNotVisited;
+        this.rangeOfVision = rangeOfVision;
     }
 
     public override TreeNodeState Evaluate()
@@ -35,18 +39,18 @@ public class CheckIsSmallTowerNotVisited : TreeNode
         state = TreeNodeState.SUCCESS;
         return state;*/
 
-        if (GigantBT.smallTowerNotVisited)
+        if (smallTowerNotVisited)
         {
             object t = GetData("target");
             if (t == null)
             {
-                Collider2D collision = Physics2D.OverlapCircle(_agent.gameObject.transform.position, GigantBT.rangeOfVision, _objectsLayerMask);
+                Collider2D collision = Physics2D.OverlapCircle(_agent.gameObject.transform.position, rangeOfVision, _objectsLayerMask);
                 if (collision != null)
                 {
 
                     parent.parent.SetData("target", collision.transform);
                     Debug.Log("detectado");
-                    GigantBT.smallTowerNotVisited = false; //torre pequeña visitada
+                    smallTowerNotVisited = false; //torre pequeña visitada
                     state = TreeNodeState.FAILURE;
                     return state;
                 }
