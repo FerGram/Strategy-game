@@ -9,6 +9,7 @@ public abstract class Agent : MonoBehaviour
 
     [SerializeField] protected float _speed = 3f;
     [SerializeField] protected float _stoppingNodeDistance = 0.3f;
+    [SerializeField] protected float _health = 5f;
 
     [Header("Navigation")]
     [SerializeField] protected Pathfinder _pathfinder;
@@ -86,5 +87,17 @@ public abstract class Agent : MonoBehaviour
     {
         StopCoroutine(nameof(NavigationRoutine));
         _rb.velocity = Vector2.zero;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        _health -= damage;
+
+        if (_health < 0) Die();
+    }
+
+    protected virtual void Die()
+    {
+        Destroy(this.gameObject);
     }
 }
