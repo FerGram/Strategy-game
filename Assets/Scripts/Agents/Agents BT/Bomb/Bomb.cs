@@ -39,13 +39,13 @@ public class Bomb : MonoBehaviour
 
     private void DamageEntitiesInRange()
     {
-        Agent[] agents = FindObjectsOfType<Agent>();
+        EntityHealth[] entities = FindObjectsOfType<EntityHealth>();
 
-        foreach (var agent in agents)
+        foreach (var entity in entities)
         {
-            if (Vector2.Distance(agent.transform.position, transform.position) < _explosionRange)
+            if (Vector2.Distance(entity.transform.position, transform.position) < _explosionRange)
             {
-                agent.TakeDamage(_damage);
+                entity.TakeDamage(_damage);
             }
         }
     }

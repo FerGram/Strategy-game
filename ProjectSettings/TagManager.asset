@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SmallTower
   - KingTower
+  - UI Camera
   layers:
   - Default
   - TransparentFX

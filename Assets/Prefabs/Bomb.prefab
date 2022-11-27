@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 3
-  _explosionRange: 4
-  _explosionDelay: 2.5
+  _explosionRange: 1
+  _explosionDelay: 1
 --- !u!212 &3461587908018381830
 SpriteRenderer:
   m_ObjectHideFlags: 0

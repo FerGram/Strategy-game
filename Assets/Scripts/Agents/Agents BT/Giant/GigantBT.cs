@@ -4,7 +4,7 @@ using UnityEngine;
 
 using BehaviourTree;
 
-[RequireComponent(typeof(Giant))]
+[RequireComponent(typeof(Agent))]
 public class GigantBT : BehaviourTree.Tree
 {
     [Header("Stats")]
