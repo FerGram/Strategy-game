@@ -88,9 +88,9 @@ GameObject:
   - component: {fileID: 7453984760201280357}
   - component: {fileID: 7850048506188740224}
   - component: {fileID: 558736198838271335}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: TowerSmall
-  m_TagString: SmallTower
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02da92249df64d94fb283ff2ab94de1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 10
+  life: 5
   slider: {fileID: 4887391889616446273}
   offset: {x: 0, y: 0.5, z: 0}
 --- !u!61 &558736198838271335

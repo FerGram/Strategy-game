@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTree;
 
-public class TaskMoveToKingTower : TreeNode
+public class TaskMoveToTarget : TreeNode
 {
     //Variables
     private Agent agent;
     private Animator animator;
-    private GameObject kingTower;
+    private GameObject target;
 
     //Constructor
-    public TaskMoveToKingTower(Agent agent, GameObject kingTower, Animator anim)
+    public TaskMoveToTarget(Agent agent, GameObject target, Animator anim)
     {
         this.agent = agent;
-        this.kingTower = kingTower;
+        this.target = target;
         animator = anim;
     }
 
@@ -24,8 +24,8 @@ public class TaskMoveToKingTower : TreeNode
         animator.SetBool("IsWalking", true);
         animator.SetBool("IsAttacking", false);
 
-        if (!agent.IsNavigatingTowards(kingTower.transform.GetChild(0).position))
-            agent.StartNavigation(kingTower.transform.GetChild(0));
+        if (!agent.IsNavigatingTowards(target.transform.GetChild(0).position))
+            agent.StartNavigation(target.transform.GetChild(0));
 
         state = TreeNodeState.RUNNING;
         return state;

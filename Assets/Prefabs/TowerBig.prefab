@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 1824922129006727041}
   m_Layer: 6
   m_Name: TowerBig
-  m_TagString: KingTower
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

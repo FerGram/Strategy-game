@@ -11,6 +11,7 @@ public class GigantBT : BehaviourTree.Tree
     [SerializeField] float rangeOfVision = 1f;
     [SerializeField] float damage = 1f;
     [SerializeField] float attackTime = 2f;
+    [SerializeField] Rol rol = Rol.Player;
 
     [Header("Targets")]
     private GameObject[] smallTowers;
@@ -26,8 +27,20 @@ public class GigantBT : BehaviourTree.Tree
     {
         agent = GetComponent<Agent>();
         animator = GetComponent<Animator>();
-        smallTowers = GameObject.FindGameObjectsWithTag("SmallTower");
-        kingTower = GameObject.FindGameObjectWithTag("KingTower");
+
+        if(rol == Rol.Player)
+        {
+            //Torres contra las que compite el jugador
+            smallTowers = GameObject.FindGameObjectsWithTag("SmallTowerCPUSide");
+            kingTower = GameObject.FindGameObjectWithTag("KingTowerCPUSide");
+        }
+        else
+        {
+            //Torres contra las que compite la IA/CPU
+            smallTowers = GameObject.FindGameObjectsWithTag("SmallTowerPlayerSide");
+            kingTower = GameObject.FindGameObjectWithTag("KingTowerPlayerSide");
+        }
+
         smallTowerNotVisited = true;
         kingTowerNotVisited = true;
     }
@@ -47,8 +60,8 @@ public class GigantBT : BehaviourTree.Tree
             }),
             new Sequence(new List<TreeNode>
             {
-                new CheckIsKingTowerNotVisited(agent, rangeOfVision, kingTowerNotVisited),
-                new TaskMoveToKingTower(agent, kingTower, animator),
+                new CheckIsKingTowerNotVisited(agent, rangeOfVision, kingTowerNotVisited, kingTower),
+                new TaskMoveToTarget(agent, kingTower, animator),
             }),
             new Sequence(new List<TreeNode>
             {
@@ -60,4 +73,10 @@ public class GigantBT : BehaviourTree.Tree
 
         return root;
     }
+}
+
+public enum Rol
+{
+    Player,
+    CPU
 }
