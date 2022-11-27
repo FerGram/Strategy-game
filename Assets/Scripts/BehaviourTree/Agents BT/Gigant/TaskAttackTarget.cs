@@ -11,7 +11,6 @@ public class TaskAttackTarget : TreeNode
     private Agent _agent;
     private Tower tower;
     private float _attackCounter = 0;
-    private float _attackTime = 2f;
 
     //Constructor
     public TaskAttackTarget(Agent agent)
@@ -24,24 +23,26 @@ public class TaskAttackTarget : TreeNode
         Transform _target = (Transform)GetData("target");
         if (_target != null)
         {
+
             tower = _target.GetComponentInChildren<Tower>();
             GigantBT.animator.SetBool("IsAttacking", true);
             GigantBT.animator.SetBool("IsWalking", false);
            
             _attackCounter += Time.deltaTime;
-            if(_attackCounter >= _attackTime)
+            if(_attackCounter >= GigantBT.attackTime)
             {
-                bool enemyIsDead = tower.TakeHit(GigantBT.damage); //si muere, devuelve true
-                if (enemyIsDead)
-                {
-                    ClearData("target");
-                    GigantBT.animator.SetBool("IsAttacking", false);
-                    GigantBT.animator.SetBool("IsWalking", true);
-                }
-                else
-                {
-                    _attackCounter = 0f;
-                }
+                tower.TakeHit(GigantBT.damage);
+                _attackCounter = 0f;
+
+            }
+
+            if(tower.life <= 0)
+            {
+                ClearData("target");
+                //parent.parent.SetData("target", collision.transform);
+                GigantBT.animator.SetBool("IsAttacking", false);
+                GigantBT.animator.SetBool("IsWalking", true);
+
             }
             
         }

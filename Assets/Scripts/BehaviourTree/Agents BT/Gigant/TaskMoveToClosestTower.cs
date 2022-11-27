@@ -17,9 +17,7 @@ public class TaskMoveToClosestTower : TreeNode
 
     public override TreeNodeState Evaluate()
     {
-        Transform _target = (Transform)GetData("target");
-        if (_target == null)
-        {
+
             GigantBT.animator.SetBool("IsWalking", true);
             GigantBT.animator.SetBool("IsAttacking", false);
             if (Vector2.Distance(_agent.gameObject.transform.position, GigantBT.smallTowers[0].gameObject.transform.position) <
@@ -32,7 +30,6 @@ public class TaskMoveToClosestTower : TreeNode
                 _agent.StartNavigation(_agent.rb, GigantBT.smallTowers[1].transform.GetChild(0));
             }
 
-        }
         
         state = TreeNodeState.RUNNING;
         return state;

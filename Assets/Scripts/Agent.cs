@@ -57,7 +57,7 @@ public class Agent : MonoBehaviour
         }
     }
 
-    protected void CancelNavigation()
+    public void CancelNavigation()
     {
         StopCoroutine("StartNavigation");
     }

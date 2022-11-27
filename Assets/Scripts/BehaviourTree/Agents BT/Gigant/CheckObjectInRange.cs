@@ -23,6 +23,7 @@ public class CheckObjectInRange : TreeNode
             Collider2D collision = Physics2D.OverlapCircle(_agent.gameObject.transform.position, GigantBT.rangeOfVision, _objectsLayerMask);
             if (collision != null)
             {
+                
                 parent.parent.SetData("target", collision.transform);
                 Debug.Log("detectado");
                 state = TreeNodeState.SUCCESS;

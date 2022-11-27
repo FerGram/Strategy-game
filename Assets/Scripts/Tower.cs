@@ -11,6 +11,8 @@ public class Tower : MonoBehaviour
     void Start()
     {
         slider = GetComponentInChildren<Slider>(true);
+        slider.maxValue = life;
+        slider.value = life;
 
     }
 
@@ -26,7 +28,7 @@ public class Tower : MonoBehaviour
         if(life > 0)
         {
             slider.gameObject.SetActive(true);
-            slider.value -= damage * 0.1f;
+            slider.value -= damage;
             life -= damage;
             return false;
         }

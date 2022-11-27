@@ -9,16 +9,27 @@ public class GigantBT : BehaviourTree.Tree
     //Variables globales
     //public static float speed = 2f;
     public static Agent agent;
-    public static float rangeOfVision = 1f;
-    public static float damage = 1f;
     public static Animator animator;
 
+    [Header("Targets")]
     public static GameObject[] smallTowers;
+    public static GameObject kingTower;
+    public static bool smallTowerNotVisited;
+    public static bool kingTowerNotVisited;
+
+    [Header("Stats")]
+    public static float rangeOfVision = 1f;
+    public static float damage = 1f;
+    public static float attackTime = 2f;
+
     private void Awake()
     {
         agent = GetComponent<Agent>();
         animator = GetComponent<Animator>();
         smallTowers = GameObject.FindGameObjectsWithTag("SmallTower");
+        kingTower = GameObject.FindGameObjectWithTag("KingTower");
+        smallTowerNotVisited = true;
+        kingTowerNotVisited = true;
     }
     protected override TreeNode SetUpTree()
     {
@@ -26,12 +37,27 @@ public class GigantBT : BehaviourTree.Tree
         {
             new Sequence(new List<TreeNode>
             {
-                new CheckObjectInRange(agent),
+                new CheckIsSmallTowerNotVisited(agent),
+                new TaskMoveToClosestTower(agent),
+            }),
+            new Sequence(new List<TreeNode>
+            {
+                new CheckIsTowerAlive(),
                 new TaskAttackTarget(agent),
             }),
-            new TaskMoveToClosestTower(agent),
+            new Sequence(new List<TreeNode>
+            {
+                new CheckIsKingTowerNotVisited(agent),
+                new TaskMoveToKingTower(agent),
+            }),
+            new Sequence(new List<TreeNode>
+            {
+                new CheckIsTowerAlive(),
+                new TaskAttackTarget(agent),
+            }),
+
         });
-            ;
+
         return root;
     }
 }
