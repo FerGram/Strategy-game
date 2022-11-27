@@ -25,11 +25,11 @@ public class TaskMoveToClosestTower : TreeNode
             if (Vector2.Distance(_agent.gameObject.transform.position, GigantBT.smallTowers[0].gameObject.transform.position) <
                 Vector2.Distance(_agent.gameObject.transform.position, GigantBT.smallTowers[1].gameObject.transform.position))
             {
-                _agent.StartNavigation(_agent.rb, GigantBT.smallTowers[0].transform.GetChild(0)); //Devuelve el transform del hijo, que es el target al que tiene que moverse
+                _agent.StartNavigation(GigantBT.smallTowers[0].transform.GetChild(0)); //Devuelve el transform del hijo, que es el target al que tiene que moverse
             }
             else
             {
-                _agent.StartNavigation(_agent.rb, GigantBT.smallTowers[1].transform.GetChild(0));
+                _agent.StartNavigation(GigantBT.smallTowers[1].transform.GetChild(0));
             }
 
         }

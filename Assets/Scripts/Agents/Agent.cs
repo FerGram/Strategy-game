@@ -2,18 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Agent : MonoBehaviour
+[RequireComponent(typeof(Rigidbody2D))]
+public abstract class Agent : MonoBehaviour
 {
     [SerializeField] protected float _speed = 3f;
     [SerializeField] protected float _stoppingNodeDistance = 0.3f;
 
     [Header("Navigation")]
     [SerializeField] protected Pathfinder _pathfinder;
-    public Rigidbody2D rb;
+    private Rigidbody2D _rb;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();
     }
     void OnDrawGizmosSelected()
     {
@@ -21,17 +22,31 @@ public class Agent : MonoBehaviour
         Gizmos.DrawWireSphere(gameObject.transform.position, GigantBT.rangeOfVision);
     }
 
-    public void StartNavigation(Rigidbody2D rb, Transform to)
+    public void StartNavigation(Transform to)
     {
-        StartNavigation(rb, new Vector2(to.position.x, to.position.y));
+        StartNavigation(new Vector2(to.position.x, to.position.y));
     }
-    public void StartNavigation(Rigidbody2D rb, Vector2 to)
+    public void StartNavigation(Vector2 to)
     {
         CancelNavigation();
 
-        rb.velocity = Vector2.zero;
+        this._rb.velocity = Vector2.zero;
 
-        StartCoroutine(NavigationRoutine(rb, to, _speed, _stoppingNodeDistance));
+        //Defensive clause if the _pathfinder is not set
+        if (_pathfinder == null)
+        {
+            Debug.LogWarning("WARNING: Pathfinder variable was not set. Looking for the pathfinder object...");
+            _pathfinder = FindObjectOfType<Pathfinder>();
+
+            if (_pathfinder == null)
+            {
+                Debug.LogError("ERROR: There's no pathfinder object in the scene");
+                return;
+            }
+            else Debug.Log("LOG: Pathfinder found. Resuming execution...");
+        }
+
+        StartCoroutine(NavigationRoutine(this._rb, to, _speed, _stoppingNodeDistance));
     }
 
     IEnumerator NavigationRoutine(Rigidbody2D agent, Vector2 to, float speed, float stoppingNodeDistance)
@@ -59,6 +74,6 @@ public class Agent : MonoBehaviour
 
     protected void CancelNavigation()
     {
-        StopCoroutine("StartNavigation");
+        StopCoroutine(nameof(NavigationRoutine));
     }
 }
