@@ -20,7 +20,7 @@ public class TaskMoveToKingTower : TreeNode
             GigantBT.animator.SetBool("IsWalking", true);
             GigantBT.animator.SetBool("IsAttacking", false);
             
-            _agent.StartNavigation(_agent.rb, GigantBT.kingTower.transform.GetChild(0)); 
+            _agent.StartNavigation(GigantBT.kingTower.transform.GetChild(0)); 
 
         state = TreeNodeState.RUNNING;
         return state;
