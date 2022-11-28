@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cd9e95536603154eacae06cdf0c7e19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 2
+  _speed: 1
   _stoppingNodeDistance: 0.3
   _pathfinder: {fileID: 0}
 --- !u!114 &1917781376037315087
@@ -66,8 +66,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRange: 1
-  attackDamage: 1
-  timeBetweenAttacks: 0.2
+  attackDamage: 0.2
+  timeBetweenAttacks: 0.5
   _targetBuildings: 0
   _targetAgents: 1
 --- !u!114 &1917781376037315086
@@ -166,7 +166,7 @@ Animator:
   m_GameObject: {fileID: 71996699421800406}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5734d640d5a0fed4abc6f9e974504eec, type: 2}
+  m_Controller: {fileID: 9100000, guid: e66b69063a54acb45837b84b6e4a932f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

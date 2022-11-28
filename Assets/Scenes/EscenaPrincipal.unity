@@ -3948,18 +3948,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Archer
       objectReference: {fileID: 0}
-    - target: {fileID: 1917781376037315087, guid: eedce14d569922e4ca43f9b0bf0ebceb, type: 3}
-      propertyPath: attackDamage
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1917781376037315087, guid: eedce14d569922e4ca43f9b0bf0ebceb, type: 3}
-      propertyPath: _targetBuildings
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1917781376037315087, guid: eedce14d569922e4ca43f9b0bf0ebceb, type: 3}
-      propertyPath: timeBetweenAttacks
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 4603933333653771150, guid: eedce14d569922e4ca43f9b0bf0ebceb, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -3972,10 +3960,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1761422423}
-    - target: {fileID: 6325578067326434718, guid: eedce14d569922e4ca43f9b0bf0ebceb, type: 3}
-      propertyPath: _speed
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6325578067326434718, guid: eedce14d569922e4ca43f9b0bf0ebceb, type: 3}
       propertyPath: _pathfinder
       value: 
