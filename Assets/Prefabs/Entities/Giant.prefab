@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8244673397633310608}
   - component: {fileID: 8244673397633310622}
   - component: {fileID: 8244673397633310621}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Giant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cd9e95536603154eacae06cdf0c7e19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3
+  _speed: 0.5
   _stoppingNodeDistance: 0.3
   _pathfinder: {fileID: 0}
 --- !u!114 &8244673397633310609
@@ -65,9 +65,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8458c5dc1328776429864d25ef03d6e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeOfVision: 1
-  damage: 1
-  attackTime: 2
+  attackRange: 1
+  attackDamage: 1
+  timeBetweenAttacks: 2
+  _targetBuildings: 0
+  _targetAgents: 0
 --- !u!114 &7496358506326575684
 MonoBehaviour:
   m_ObjectHideFlags: 0

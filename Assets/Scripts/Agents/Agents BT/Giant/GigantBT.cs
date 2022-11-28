@@ -5,27 +5,16 @@ using UnityEngine;
 using BehaviourTree;
 
 [RequireComponent(typeof(Agent))]
-public class GigantBT : BehaviourTree.Tree
+public class GigantBT : AgentBT
 {
-    [Header("Stats")]
-    [SerializeField] float rangeOfVision = 1f;
-    [SerializeField] float damage = 1f;
-    [SerializeField] float attackTime = 2f;
-
-    [Header("Targets")]
+    //Targets
     private GameObject[] smallTowers;
     private GameObject kingTower;
     private bool smallTowerNotVisited;
     private bool kingTowerNotVisited;
 
-    private Agent agent;
-    private Animator animator;
-
-
-    private void Awake()
+    private void OnEnable()
     {
-        agent = GetComponent<Agent>();
-        animator = GetComponent<Animator>();
         smallTowers = GameObject.FindGameObjectsWithTag("SmallTower");
         kingTower = GameObject.FindGameObjectWithTag("KingTower");
         smallTowerNotVisited = true;
@@ -37,23 +26,23 @@ public class GigantBT : BehaviourTree.Tree
         {
             new Sequence(new List<TreeNode>
             {
-                new CheckIsSmallTowerNotVisited(agent, rangeOfVision, smallTowerNotVisited),
+                new CheckIsSmallTowerNotVisited(agent, attackRange, smallTowerNotVisited),
                 new TaskMoveToClosestTower(agent, smallTowers, animator),
             }),
             new Sequence(new List<TreeNode>
             {
                 new CheckIsTowerAlive(),
-                new TaskAttackTarget(damage, attackTime, animator),
+                new TaskAttackTarget(attackDamage, timeBetweenAttacks, animator),
             }),
             new Sequence(new List<TreeNode>
             {
-                new CheckIsKingTowerNotVisited(agent, rangeOfVision, kingTowerNotVisited),
+                new CheckIsKingTowerNotVisited(agent, attackRange, kingTowerNotVisited),
                 new TaskMoveToKingTower(agent, kingTower, animator),
             }),
             new Sequence(new List<TreeNode>
             {
                 new CheckIsTowerAlive(),
-                new TaskAttackTarget(damage, attackTime, animator),
+                new TaskAttackTarget(attackDamage, timeBetweenAttacks, animator),
             }),
 
         });

@@ -15,6 +15,7 @@ public class Agent : MonoBehaviour
 
     private Rigidbody2D _rb;
     private Vector2 _currentTarget;
+    private Coroutine _navigationRoutine;
 
     private void Awake()
     {
@@ -45,7 +46,7 @@ public class Agent : MonoBehaviour
             else Debug.Log("LOG: Pathfinder found. Resuming execution...");
         }
 
-        StartCoroutine(NavigationRoutine(to, _speed, _stoppingNodeDistance));
+        _navigationRoutine = StartCoroutine(NavigationRoutine(to, _speed, _stoppingNodeDistance));
     }
 
     public bool IsNavigatingTowards(Vector2 towards)
@@ -57,9 +58,10 @@ public class Agent : MonoBehaviour
     {
         List<Node> path = _pathfinder.GetPath(_rb, to);
 
+        IsNavigating = true;
+
         if (path != null)
         {
-            IsNavigating = true;
             _currentTarget = to;
 
             while (path.Count > 0)
@@ -77,14 +79,18 @@ public class Agent : MonoBehaviour
             }
             _rb.velocity = Vector2.zero;
 
-            IsNavigating = false;
             _currentTarget = Vector2.zero;
         }
+        IsNavigating = false;
     }
 
     public void CancelNavigation()
     {
-        StopCoroutine(nameof(NavigationRoutine));
+        if (_navigationRoutine != null)
+        {
+            StopCoroutine(_navigationRoutine);
+        }
+        IsNavigating = false;
         _rb.velocity = Vector2.zero;
     }
 }
