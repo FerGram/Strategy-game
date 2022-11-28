@@ -15,7 +15,6 @@ public class CheckIsTowerAlive : TreeNode
         if (t != null)
         {
             Tower tower = t.gameObject.GetComponent<Tower>();
-            
             if (tower.life > 0)
             {
                 state = TreeNodeState.SUCCESS;

@@ -11,6 +11,10 @@ public class GigantBT : BehaviourTree.Tree
     [SerializeField] float rangeOfVision = 1f;
     [SerializeField] float damage = 1f;
     [SerializeField] float attackTime = 2f;
+    [SerializeField] LayerMask objectsLayerMaskSmallTowersPlayer;
+    [SerializeField] LayerMask objectsLayerMaskKingTowerPlayer;
+    [SerializeField] LayerMask objectsLayerMaskSmallTowersCPU;
+    [SerializeField] LayerMask objectsLayerMaskKingTowerCPU;
     [SerializeField] Rol rol = Rol.Player;
 
     [Header("Targets")]
@@ -18,6 +22,8 @@ public class GigantBT : BehaviourTree.Tree
     private GameObject kingTower;
     private bool smallTowerNotVisited;
     private bool kingTowerNotVisited;
+    private LayerMask layerMaskSmallTowers;
+    private LayerMask layerMaskKingTower;
 
     private Agent agent;
     private Animator animator;
@@ -33,12 +39,16 @@ public class GigantBT : BehaviourTree.Tree
             //Torres contra las que compite el jugador
             smallTowers = GameObject.FindGameObjectsWithTag("SmallTowerCPUSide");
             kingTower = GameObject.FindGameObjectWithTag("KingTowerCPUSide");
+            layerMaskKingTower = objectsLayerMaskKingTowerCPU;
+            layerMaskSmallTowers = objectsLayerMaskSmallTowersCPU;
         }
         else
         {
             //Torres contra las que compite la IA/CPU
             smallTowers = GameObject.FindGameObjectsWithTag("SmallTowerPlayerSide");
             kingTower = GameObject.FindGameObjectWithTag("KingTowerPlayerSide");
+            layerMaskKingTower = objectsLayerMaskKingTowerPlayer;
+            layerMaskSmallTowers = objectsLayerMaskSmallTowersPlayer;
         }
 
         smallTowerNotVisited = true;
@@ -50,7 +60,7 @@ public class GigantBT : BehaviourTree.Tree
         {
             new Sequence(new List<TreeNode>
             {
-                new CheckIsSmallTowerNotVisited(agent, rangeOfVision, smallTowerNotVisited),
+                new CheckIsSmallTowerNotVisited(agent, rangeOfVision, smallTowerNotVisited, layerMaskSmallTowers),
                 new TaskMoveToClosestTower(agent, smallTowers, animator),
             }),
             new Sequence(new List<TreeNode>
@@ -60,7 +70,7 @@ public class GigantBT : BehaviourTree.Tree
             }),
             new Sequence(new List<TreeNode>
             {
-                new CheckIsKingTowerNotVisited(agent, rangeOfVision, kingTowerNotVisited, kingTower),
+                new CheckIsKingTowerNotVisited(agent, rangeOfVision, kingTowerNotVisited, layerMaskKingTower),
                 new TaskMoveToTarget(agent, kingTower, animator),
             }),
             new Sequence(new List<TreeNode>

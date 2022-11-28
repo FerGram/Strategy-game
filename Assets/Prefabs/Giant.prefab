@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 3
   _stoppingNodeDistance: 0.3
+  _health: 5
   _pathfinder: {fileID: 0}
 --- !u!114 &8244673397633310609
 MonoBehaviour:
@@ -63,8 +64,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8458c5dc1328776429864d25ef03d6e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rangeOfVision: 1
-  _damage: 1
+  rangeOfVision: 1
+  damage: 1
+  attackTime: 2
+  objectsLayerMaskSmallTowersPlayer:
+    serializedVersion: 2
+    m_Bits: 512
+  objectsLayerMaskKingTowerPlayer:
+    serializedVersion: 2
+    m_Bits: 128
+  objectsLayerMaskSmallTowersCPU:
+    serializedVersion: 2
+    m_Bits: 256
+  objectsLayerMaskKingTowerCPU:
+    serializedVersion: 2
+    m_Bits: 64
+  rol: 0
 --- !u!50 &8244673397633310608
 Rigidbody2D:
   serializedVersion: 4

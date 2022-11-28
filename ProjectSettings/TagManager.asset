@@ -15,10 +15,10 @@ TagManager:
   - 
   - Water
   - UI
-  - KingTowers
-  - SmallTowers
-  - 
-  - 
+  - KingTowerCPU
+  - KingTowerPlayer
+  - SmallTowersCPU
+  - SmallTowersPlayers
   - 
   - 
   - 

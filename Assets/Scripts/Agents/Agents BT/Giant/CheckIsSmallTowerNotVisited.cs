@@ -7,16 +7,17 @@ public class CheckIsSmallTowerNotVisited : TreeNode
 {
     //Variables
     private Agent _agent;
-    public static int _objectsLayerMask = 1 << 7; //Hacer una layer con los castillos, se podria usar otra con los enemigos para otros agentes(?
+    private LayerMask _objectsLayerMask;
     private bool smallTowerNotVisited;
     private float rangeOfVision;
 
     //Constructor
-    public CheckIsSmallTowerNotVisited(Agent agent, float rangeOfVision, bool smallTowerNotVisited)
+    public CheckIsSmallTowerNotVisited(Agent agent, float rangeOfVision, bool smallTowerNotVisited, LayerMask objectsLayerMask)
     {
         _agent = agent;
         this.smallTowerNotVisited = smallTowerNotVisited;
         this.rangeOfVision = rangeOfVision;
+        _objectsLayerMask = objectsLayerMask;
     }
 
     public override TreeNodeState Evaluate()

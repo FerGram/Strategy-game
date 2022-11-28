@@ -486,6 +486,10 @@ PrefabInstance:
       value: TowerSmall
       objectReference: {fileID: 0}
     - target: {fileID: 3768446310548309608, guid: 66e0a818ea5cf1a4fbd73f3d66da37a2, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3768446310548309608, guid: 66e0a818ea5cf1a4fbd73f3d66da37a2, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -594,6 +598,10 @@ PrefabInstance:
     - target: {fileID: 3768446310548309608, guid: 66e0a818ea5cf1a4fbd73f3d66da37a2, type: 3}
       propertyPath: m_Name
       value: TowerSmall
+      objectReference: {fileID: 0}
+    - target: {fileID: 3768446310548309608, guid: 66e0a818ea5cf1a4fbd73f3d66da37a2, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3768446310548309608, guid: 66e0a818ea5cf1a4fbd73f3d66da37a2, type: 3}
       propertyPath: m_IsActive
@@ -899,6 +907,10 @@ PrefabInstance:
       value: TowerSmall
       objectReference: {fileID: 0}
     - target: {fileID: 3768446310548309608, guid: 66e0a818ea5cf1a4fbd73f3d66da37a2, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3768446310548309608, guid: 66e0a818ea5cf1a4fbd73f3d66da37a2, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -1158,6 +1170,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3285216035207964825, guid: 957352ef21cf68345b2d3d0c68760509, type: 3}
+      propertyPath: _pathfinder
+      value: 
+      objectReference: {fileID: 103331620}
     - target: {fileID: 8244673397633310610, guid: 957352ef21cf68345b2d3d0c68760509, type: 3}
       propertyPath: _pathfinder
       value: 
@@ -1176,11 +1192,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8244673397633310623, guid: 957352ef21cf68345b2d3d0c68760509, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.26
+      value: 12.85
       objectReference: {fileID: 0}
     - target: {fileID: 8244673397633310623, guid: 957352ef21cf68345b2d3d0c68760509, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.02
+      value: 0.95
       objectReference: {fileID: 0}
     - target: {fileID: 8244673397633310623, guid: 957352ef21cf68345b2d3d0c68760509, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1517,6 +1533,10 @@ PrefabInstance:
     - target: {fileID: 3521974511696810198, guid: fecbf2cf4cb5af040a151efd2f92ea18, type: 3}
       propertyPath: m_Name
       value: TowerBig
+      objectReference: {fileID: 0}
+    - target: {fileID: 3521974511696810198, guid: fecbf2cf4cb5af040a151efd2f92ea18, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3521974511696810198, guid: fecbf2cf4cb5af040a151efd2f92ea18, type: 3}
       propertyPath: m_TagString
@@ -3958,6 +3978,10 @@ PrefabInstance:
       value: TowerSmall
       objectReference: {fileID: 0}
     - target: {fileID: 3768446310548309608, guid: 66e0a818ea5cf1a4fbd73f3d66da37a2, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3768446310548309608, guid: 66e0a818ea5cf1a4fbd73f3d66da37a2, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -4047,6 +4071,14 @@ PrefabInstance:
       propertyPath: rol
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8244673397633310609, guid: 957352ef21cf68345b2d3d0c68760509, type: 3}
+      propertyPath: objectsLayerMask.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 8244673397633310609, guid: 957352ef21cf68345b2d3d0c68760509, type: 3}
+      propertyPath: objectsLayerMaskSmallTowers.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
     - target: {fileID: 8244673397633310610, guid: 957352ef21cf68345b2d3d0c68760509, type: 3}
       propertyPath: _speed
       value: 1
@@ -4069,11 +4101,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8244673397633310623, guid: 957352ef21cf68345b2d3d0c68760509, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.94
+      value: 12.85
       objectReference: {fileID: 0}
     - target: {fileID: 8244673397633310623, guid: 957352ef21cf68345b2d3d0c68760509, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.33
+      value: 5.45
       objectReference: {fileID: 0}
     - target: {fileID: 8244673397633310623, guid: 957352ef21cf68345b2d3d0c68760509, type: 3}
       propertyPath: m_LocalPosition.z
