@@ -83,7 +83,14 @@ public class GigantBT : BehaviourTree.Tree
 
         return root;
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(gameObject.transform.position, rangeOfVision); //gizmo rango de vision
+    }
 }
+
+
 
 public enum Rol
 {
