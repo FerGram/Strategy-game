@@ -30,6 +30,8 @@ public class TaskAttackEntity : TreeNode
 
         if (target != null && target.GetHealth() > 0)
         {
+            FaceTarget(target);
+
             agent.CancelNavigation();
 
             animator.SetBool("IsAttacking", true);
@@ -55,5 +57,17 @@ public class TaskAttackEntity : TreeNode
         animator.SetBool("IsWalking", true);
         parent.ClearData("Target");
         return TreeNodeState.SUCCESS;
+    }
+
+    private void FaceTarget(EntityHealth target)
+    {
+        if (Mathf.Abs(target.transform.position.x) - Mathf.Abs(agent.transform.position.x) >= 0)
+        {
+            agent.GetComponent<SpriteRenderer>().flipX = false;
+        }
+        else
+        {
+            agent.GetComponent<SpriteRenderer>().flipX = true;
+        }
     }
 }

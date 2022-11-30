@@ -49,6 +49,7 @@ MonoBehaviour:
   _damage: 3
   _explosionRange: 1
   _explosionDelay: 1
+  _explosionBackForce: 1000
 --- !u!212 &3461587908018381830
 SpriteRenderer:
   m_ObjectHideFlags: 0
