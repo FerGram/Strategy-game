@@ -43,6 +43,7 @@ public class CheckEntityInRange : TreeNode
                     //Continue if does not belong to any target layer
                     if ((1 << damageableEntities[i].gameObject.layer & _objectsLayerMask) == 0) continue;
                     if (damageableEntities[i].gameObject == _agent.gameObject) continue;
+                    if (damageableEntities[i].gameObject.CompareTag(_agent.gameObject.tag)) continue;
 
                     entityPos = damageableEntities[i].transform.position;
                     float distanceToEntity = Vector2.Distance(agentPos, entityPos);

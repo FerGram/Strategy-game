@@ -68,7 +68,7 @@ MonoBehaviour:
   attackRange: 1
   attackDamage: 1
   timeBetweenAttacks: 2
-  _targetBuildings: 0
+  _targetBuildings: 1
   _targetAgents: 0
 --- !u!114 &7496358506326575684
 MonoBehaviour:

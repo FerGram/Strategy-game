@@ -8,7 +8,7 @@ using BehaviourTree;
 public class TaskAttackEntity : TreeNode
 {
     //Variables
-    private Agent agent;
+    private Agent _agent;
     private float attackDamage;
     private float timeBetweenAttacks;
     private Animator animator;
@@ -18,7 +18,7 @@ public class TaskAttackEntity : TreeNode
     //Constructor
     public TaskAttackEntity(Agent agent, float dmg, float timeBtwAttacks, Animator anim)
     {
-        this.agent = agent;
+        this._agent = agent;
         attackDamage = dmg;
         animator = anim;
         timeBetweenAttacks = timeBtwAttacks;
@@ -32,7 +32,7 @@ public class TaskAttackEntity : TreeNode
         {
             FaceTarget(target);
 
-            agent.CancelNavigation();
+            _agent.CancelNavigation();
 
             animator.SetBool("IsAttacking", true);
             animator.SetBool("IsWalking", false);
@@ -61,13 +61,18 @@ public class TaskAttackEntity : TreeNode
 
     private void FaceTarget(EntityHealth target)
     {
-        if (Mathf.Abs(target.transform.position.x) - Mathf.Abs(agent.transform.position.x) >= 0)
+        if (Mathf.Abs(target.transform.position.x) - Mathf.Abs(_agent.transform.position.x) >= 0)
         {
-            agent.GetComponent<SpriteRenderer>().flipX = false;
+            Vector3 scale = _agent.transform.localScale;
+            scale.x = Mathf.Abs(scale.x);
+            _agent.transform.localScale = scale;
+
         }
         else
         {
-            agent.GetComponent<SpriteRenderer>().flipX = true;
+            Vector3 scale = _agent.transform.localScale;
+            scale.x = -Mathf.Abs(scale.x);
+            _agent.transform.localScale = scale;
         }
     }
 }

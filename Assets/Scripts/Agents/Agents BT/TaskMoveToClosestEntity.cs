@@ -47,6 +47,7 @@ public class TaskMoveToClosestEntity : TreeNode
                 //Continue if does not belong to any target layer
                 if ((1 << damageableEntities[i].gameObject.layer & _objectsLayerMask) == 0) continue;
                 if (damageableEntities[i].gameObject == _agent.gameObject) continue;
+                if (damageableEntities[i].gameObject.CompareTag(_agent.gameObject.tag)) continue;
 
                 entityPos = damageableEntities[i].transform.position;
                 float distanceToEntity = Vector2.Distance(agentPos, entityPos);
@@ -60,8 +61,8 @@ public class TaskMoveToClosestEntity : TreeNode
             if (minDistanceEntity != null)
             {
                 Debug.Log("Navigating towards new target...");
-
-                if (minDistanceEntity.tag.Contains("Tower"))
+                
+                if (minDistanceEntity.gameObject.layer == LayerMask.NameToLayer("Buildings"))
                 {
                     _currentTarget = minDistanceEntity.transform.GetChild(0).position;
                 }
@@ -70,6 +71,8 @@ public class TaskMoveToClosestEntity : TreeNode
                     _currentTarget = minDistanceEntity.transform.position;
                 }
 
+                FaceTarget(minDistanceEntity);
+
                 _agent.StartNavigation(_currentTarget);
 
                 return TreeNodeState.RUNNING;
@@ -77,5 +80,22 @@ public class TaskMoveToClosestEntity : TreeNode
         }
         _currentTarget = _infinityVector;
         return TreeNodeState.FAILURE;
+    }
+
+    private void FaceTarget(EntityHealth target)
+    {
+        if (Mathf.Abs(target.transform.position.x) - Mathf.Abs(_agent.transform.position.x) >= 0)
+        {
+            Vector3 scale = _agent.transform.localScale;
+            scale.x = Mathf.Abs(scale.x);
+            _agent.transform.localScale = scale;
+
+        }
+        else
+        {
+            Vector3 scale = _agent.transform.localScale;
+            scale.x = -Mathf.Abs(scale.x);
+            _agent.transform.localScale = scale;
+        }
     }
 }

@@ -26,25 +26,10 @@ public class GigantBT : AgentBT
         {
             new Sequence(new List<TreeNode>
             {
-                new CheckIsSmallTowerNotVisited(agent, attackRange, smallTowerNotVisited),
-                new TaskMoveToClosestTower(agent, smallTowers, animator),
+                new CheckEntityInRange(agent, attackRange, targetMask),
+                new TaskAttackEntity(agent, attackDamage, timeBetweenAttacks, animator),
             }),
-            new Sequence(new List<TreeNode>
-            {
-                new CheckIsTowerAlive(),
-                new TaskAttackTarget(attackDamage, timeBetweenAttacks, animator),
-            }),
-            new Sequence(new List<TreeNode>
-            {
-                new CheckIsKingTowerNotVisited(agent, attackRange, kingTowerNotVisited),
-                new TaskMoveToKingTower(agent, kingTower, animator),
-            }),
-            new Sequence(new List<TreeNode>
-            {
-                new CheckIsTowerAlive(),
-                new TaskAttackTarget(attackDamage, timeBetweenAttacks, animator),
-            }),
-
+            new TaskMoveToClosestEntity(agent, targetMask)
         });
 
         return root;
