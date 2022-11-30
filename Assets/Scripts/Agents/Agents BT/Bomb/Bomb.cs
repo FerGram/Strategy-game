@@ -44,7 +44,8 @@ public class Bomb : MonoBehaviour
 
         foreach (var entity in entities)
         {
-            if (Vector2.Distance(entity.transform.position, transform.position) < _explosionRange)
+            if (Vector2.Distance(entity.transform.position, transform.position) < _explosionRange &&
+                !entity.gameObject.CompareTag(gameObject.tag))
             {
                 entity.TakeDamage(_damage);
 
