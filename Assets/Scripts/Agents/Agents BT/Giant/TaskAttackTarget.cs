@@ -12,7 +12,7 @@ public class TaskAttackTarget : TreeNode
     private float attackTime;
     private Animator animator;
 
-    private Tower tower;
+    private EntityHealth tower;
     private float attackCounter = 0;
 
     //Constructor
@@ -28,19 +28,19 @@ public class TaskAttackTarget : TreeNode
         Transform _target = (Transform)GetData("target");
         if (_target != null)
         {
-            tower = _target.GetComponentInChildren<Tower>();
+            tower = _target.GetComponentInChildren<EntityHealth>();
             animator.SetBool("IsAttacking", true);
             animator.SetBool("IsWalking", false);
            
             attackCounter += Time.deltaTime;
             if(attackCounter >= attackTime)
             {
-                tower.TakeHit(damage);
+                tower.TakeDamage(damage);
                 attackCounter = 0f;
 
             }
 
-            if(tower.life <= 0)
+            if(tower.GetHealth() <= 0)
             {
                 ClearData("target");
                 //parent.parent.SetData("target", collision.transform);

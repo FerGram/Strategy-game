@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public abstract class Agent : MonoBehaviour
+public class Agent : MonoBehaviour
 {
     public bool IsNavigating { get; private set; } = false;
 
     [SerializeField] protected float _speed = 3f;
     [SerializeField] protected float _stoppingNodeDistance = 0.3f;
-    [SerializeField] protected float _health = 5f;
 
     [Header("Navigation")]
     [SerializeField] protected Pathfinder _pathfinder;
 
     private Rigidbody2D _rb;
     private Vector2 _currentTarget;
+    private Coroutine _navigationRoutine;
 
     private void Awake()
     {
@@ -46,7 +46,7 @@ public abstract class Agent : MonoBehaviour
             else Debug.Log("LOG: Pathfinder found. Resuming execution...");
         }
 
-        StartCoroutine(NavigationRoutine(to, _speed, _stoppingNodeDistance));
+        _navigationRoutine = StartCoroutine(NavigationRoutine(to, _speed, _stoppingNodeDistance));
     }
 
     public bool IsNavigatingTowards(Vector2 towards)
@@ -58,9 +58,10 @@ public abstract class Agent : MonoBehaviour
     {
         List<Node> path = _pathfinder.GetPath(_rb, to);
 
+        IsNavigating = true;
+
         if (path != null)
         {
-            IsNavigating = true;
             _currentTarget = to;
 
             while (path.Count > 0)
@@ -78,26 +79,18 @@ public abstract class Agent : MonoBehaviour
             }
             _rb.velocity = Vector2.zero;
 
-            IsNavigating = false;
             _currentTarget = Vector2.zero;
         }
+        IsNavigating = false;
     }
 
     public void CancelNavigation()
     {
-        StopCoroutine(nameof(NavigationRoutine));
+        if (_navigationRoutine != null)
+        {
+            StopCoroutine(_navigationRoutine);
+        }
+        IsNavigating = false;
         _rb.velocity = Vector2.zero;
-    }
-
-    public void TakeDamage(float damage)
-    {
-        _health -= damage;
-
-        if (_health < 0) Die();
-    }
-
-    protected virtual void Die()
-    {
-        Destroy(this.gameObject);
     }
 }

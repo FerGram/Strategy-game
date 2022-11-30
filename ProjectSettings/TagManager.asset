@@ -4,10 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - SmallTowerPlayerSide
-  - KingTowerPlayerSide
-  - SmallTowerCPUSide
-  - KingTowerCPUSide
+  - SmallTower
+  - KingTower
+  - UI Camera
   layers:
   - Default
   - TransparentFX
@@ -15,10 +14,10 @@ TagManager:
   - 
   - Water
   - UI
-  - KingTowerCPU
-  - KingTowerPlayer
-  - SmallTowersCPU
-  - SmallTowersPlayers
+  - Buildings
+  - Agents
+  - 
+  - 
   - 
   - 
   - 

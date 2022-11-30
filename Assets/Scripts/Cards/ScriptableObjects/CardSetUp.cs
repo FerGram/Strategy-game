@@ -7,7 +7,6 @@ public class CardSetUp : ScriptableObject
     [Space]
 
     public Sprite _cardSprite;
-
     //We can add more things:
     //Mana cost,
     //Whatever...

@@ -14,8 +14,9 @@ public class CheckIsTowerAlive : TreeNode
         Transform t = (Transform)GetData("target");
         if (t != null)
         {
-            Tower tower = t.gameObject.GetComponent<Tower>();
-            if (tower.life > 0)
+            EntityHealth tower = t.gameObject.GetComponent<EntityHealth>();
+            
+            if (tower.GetHealth() > 0)
             {
                 state = TreeNodeState.SUCCESS;
                 return state;               
