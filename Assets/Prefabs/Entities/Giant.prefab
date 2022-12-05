@@ -53,6 +53,7 @@ MonoBehaviour:
   _speed: 0.5
   _stoppingNodeDistance: 0.3
   _pathfinder: {fileID: 0}
+  cost: 2
 --- !u!114 &8244673397633310609
 MonoBehaviour:
   m_ObjectHideFlags: 0

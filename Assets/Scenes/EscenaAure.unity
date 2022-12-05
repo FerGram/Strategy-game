@@ -1887,6 +1887,7 @@ MonoBehaviour:
   - {fileID: 496583020}
   - {fileID: 1455366375}
   - {fileID: 1084068589}
+  spawnRadius: 1
   allyTurnsMana: 0
   enemyTurnsMana: 0
   timer: 652

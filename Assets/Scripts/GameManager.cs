@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> enemyUnits;
     public List<Card> enemyCards;
     [SerializeField] public GameObject[] enemyTowers;
+    [SerializeField] private float spawnRadius;
 
     public int allyTurnsMana;   
     public int enemyTurnsMana;
@@ -110,6 +111,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 nextTurn = TURN.ALLY;
+                CalculateListOfThreats();
             }
             simTimer = simDuration;
         }
@@ -135,7 +137,11 @@ public class GameManager : MonoBehaviour
 
     private void CalculateListOfThreats()
     {
-
+        for (int i = 0; i < enemyTowers.Length; i++)
+        {
+            enemyTowers[i].GetComponent<Tower>().RecalculateThreat();
+            listOfThreats[i] = enemyTowers[i].GetComponent<Tower>().threatLevel;
+        }
     }
 
     //0 torre abajo, 1 torre arriba, 2 torre grande
@@ -145,6 +151,9 @@ public class GameManager : MonoBehaviour
         if (canDoTurn && currentTurn == TURN.ENEMY)
         {
             print("Juega carta.");
+            Vector2 randomPosition = new Vector2(enemyTowers[towerIndex].transform.position.x, enemyTowers[towerIndex].transform.position.y) + UnityEngine.Random.insideUnitCircle * spawnRadius;
+            Instantiate(enemyCards[cardIndex]._cardSetUp._instantiablePrefab,randomPosition, Quaternion.identity);
+            //Coger otra carta nueva para ese hueco
             canDoTurn = false;
         }
         

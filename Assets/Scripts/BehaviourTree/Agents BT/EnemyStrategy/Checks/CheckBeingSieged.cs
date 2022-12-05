@@ -26,11 +26,6 @@ public class CheckBeingSieged : TreeNode
             int maximumThreat = 0;
             int towerIndexToDef = 0;
 
-            foreach (var threatValue in listOfThreats)
-            {
-                
-            }
-
             for (int i = 0; i < listOfThreats.Length; i++)
             {
                 int currentThreat = listOfThreats[i];
@@ -51,7 +46,7 @@ public class CheckBeingSieged : TreeNode
 
             if(maximumThreat > threatIndicator)
             {
-                
+                Debug.Log("Amenaza: " + listOfThreats[towerIndexToDef]);
                 parent.parent.SetData("target", towerIndexToDef); 
                 state = TreeNodeState.SUCCESS;
                 return state;
@@ -60,8 +55,10 @@ public class CheckBeingSieged : TreeNode
             return state;
         }
 
+
         state = TreeNodeState.SUCCESS;
         Debug.Log("Mirando si está asediado. Estado: " + state.ToString());
+        
         return state;
 
     }
