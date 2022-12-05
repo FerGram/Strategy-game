@@ -6,14 +6,14 @@ using UnityEngine;
 public class CheckBeingSieged : TreeNode
 {
     //Variables
-    public static Card[] currentCards;
-    public static Agent[] enemyUnits;
-    private Agent _agent;
-    private int totalCostOfEnemies;
+    private GameManager _gameManager;
+    private int[] listOfThreats;
+    private int threatIndicator;
     
-    public CheckBeingSieged(Agent agent)
+    public CheckBeingSieged(GameManager gameManager)
     {
-        _agent = agent;
+        _gameManager = gameManager;
+        threatIndicator = 1;
     }
 
     public override TreeNodeState Evaluate()
@@ -22,9 +22,37 @@ public class CheckBeingSieged : TreeNode
 
         if(t == null)
         {
-            if(totalCostOfEnemies > 1)
+            listOfThreats = _gameManager.listOfThreats;
+            int maximumThreat = 0;
+            int towerIndexToDef = 0;
+
+            foreach (var threatValue in listOfThreats)
             {
-                parent.parent.SetData("target", totalCostOfEnemies); //Preguntar a maría
+                
+            }
+
+            for (int i = 0; i < listOfThreats.Length; i++)
+            {
+                int currentThreat = listOfThreats[i];
+
+                //Si es la torre grande la amenaza se multiplica x2
+                if (i == 2)
+                {
+                    currentThreat *= 2;
+                }
+
+                if (currentThreat > maximumThreat)
+                {
+                    maximumThreat = currentThreat;
+                    towerIndexToDef = i;
+                }
+                    
+            }
+
+            if(maximumThreat > threatIndicator)
+            {
+                
+                parent.parent.SetData("target", towerIndexToDef); 
                 state = TreeNodeState.SUCCESS;
                 return state;
             }
@@ -33,6 +61,7 @@ public class CheckBeingSieged : TreeNode
         }
 
         state = TreeNodeState.SUCCESS;
+        Debug.Log("Mirando si está asediado. Estado: " + state.ToString());
         return state;
 
     }

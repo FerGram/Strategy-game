@@ -6,21 +6,22 @@ using UnityEngine;
 public class TaskWaitTurn : TreeNode
 {
     //Variables
-    private Agent _agent;
-    public static int turnStorer;
+    GameManager _gameManager;
+  
 
     //Constructor
-    public TaskWaitTurn(Agent agent)
+    public TaskWaitTurn(GameManager gameManager)
     {
-        _agent = agent;
+        _gameManager = gameManager;
     }
 
     public override TreeNodeState Evaluate()
     {
-        Transform _target = (Transform)GetData("target");
+        List<int> _target = (List<int>)GetData("target");
         if (_target == null)
         {
-            turnStorer++;           
+            _gameManager.StoreTurn();
+            ClearData("target");
         }
 
         state = TreeNodeState.RUNNING;

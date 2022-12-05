@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _instantiablePrefab: {fileID: 3461587908018381828, guid: f968e1e81c3ca614896434d115ad4ad4, type: 3}
   _cardSprite: {fileID: -801413819, guid: 16c1cb1153be92742a349b0935cfab32, type: 3}
+  _cardCost: 1
+  _cardType: 0

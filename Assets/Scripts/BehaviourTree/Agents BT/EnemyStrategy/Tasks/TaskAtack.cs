@@ -5,15 +5,14 @@ using UnityEngine;
 
 public class TaskAtack : TreeNode
 {
-    private Agent _agent;
+    GameManager _gameManager;
     private Card[] playerCards;
     private GameObject agentSpawn;
     //La tarea atacar pone la unidad lo más atrasada posible, a ser posible un coste 2.
-    public TaskAtack(Agent agent)
+    public TaskAtack(GameManager gameManager)
     {
-        _agent = agent;
+        _gameManager = gameManager;
     }
-
     public override TreeNodeState Evaluate()
     {
         Card finalCard;

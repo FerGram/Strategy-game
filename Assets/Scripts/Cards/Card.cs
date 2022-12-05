@@ -6,7 +6,7 @@ using DG.Tweening;
 
 public class Card : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] CardSetUp _cardSetUp;
+    public CardSetUp _cardSetUp;
     [SerializeField] float _mouseHoverScale = 1.25f;
     [SerializeField] float _mouseHoverTweenDuration = 0.2f;
 

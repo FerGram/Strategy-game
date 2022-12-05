@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyStrategyBT : BehaviourTree.Tree
 {
-    public static Agent agent;
+    public static GameManager gameManager;
     //AgenteIAenemy
     //Inputs que necesita
     //public static GameManager turn;
@@ -16,7 +16,7 @@ public class EnemyStrategyBT : BehaviourTree.Tree
 
     private void Awake()
     {
-        
+        gameManager = GetComponent<GameManager>();
     }
     protected override TreeNode SetUpTree()
     {
@@ -24,18 +24,20 @@ public class EnemyStrategyBT : BehaviourTree.Tree
         {
             new Sequence(new List<TreeNode>
             {
-                new CheckBeingSieged(agent),
-                new TaskCounterAtack(agent),
+                new CheckBeingSieged(gameManager),
+                new TaskCounterAtack(gameManager),
+            }),
+            
+            new Sequence(new List<TreeNode>{
+                new CheckAtacking(gameManager),
+                new TaskJoinSiege(gameManager),
             }),
             new Sequence(new List<TreeNode>{
-                new CheckAtacking(agent),
-                new TaskJoinSiege(agent),
+                new CheckCanWaitTurn(gameManager),
+                new TaskWaitTurn(gameManager),
             }),
-            new Sequence(new List<TreeNode>{
-                new CheckCanWaitTurn(agent),
-                new TaskWaitTurn(agent),
-            }),
-            new TaskAtack(agent),
+            new TaskAtack(gameManager),
+            
         });
         ;
         return root;

@@ -7,12 +7,13 @@ public class CheckAtacking : TreeNode
 {
     //Variables   
     public static Agent[] allies;
-    private Agent _agent;
+    
     private int totalCostOfAllies;
+    private GameManager _gameManager;
 
-    public CheckAtacking(Agent agent)
+    public CheckAtacking(GameManager gameManager)
     {
-        _agent = agent;
+        _gameManager = gameManager;
     }
 
     public override TreeNodeState Evaluate()

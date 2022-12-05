@@ -5,48 +5,48 @@ using UnityEngine;
 
 public class TaskCounterAtack : TreeNode
 {
-    private Agent _agent;
-    private Card[] playerCards;
-    private GameObject agentSpawn;
+    private GameManager _gameManager;
+    
     //La tarea consiste en defender si es necesario una torre con unidades pequeñas
-    public TaskCounterAtack(Agent agent)
+    public TaskCounterAtack(GameManager gameManager)
     {
-        _agent = agent;
+        _gameManager = gameManager;
     }
 
     public override TreeNodeState Evaluate()
     {
-        Card finalCard;
-        List<Card> posibleCards = new List<Card>();
-        Transform _target = (Transform)GetData("target");
+        int finalCardIndex;
+        List<int> posibleCardsIndex = new List<int>();
+        //Debug.Log(GetData("target").ToString());
+        List<int> _target = (List<int>)GetData("target");
         if (_target != null)
         {
-            /*
-             * Falta implementar el coste de las cartas
-            for (int i = 0; i < playerCards.Length; i++)
+            
+            for (int i = 0; i < _gameManager.enemyCards.Count; i++)
             {
-                if(playerCards[i].cost == 2)
+                if(_gameManager.enemyCards[i]._cardSetUp._cardCost < 2)
                 {
-                    posibleCards.Add(playerCards[i]);
+                    posibleCardsIndex.Add(i);
                 }
             }
-            */
+            
 
-            if (posibleCards.Count == 0)
-            {
-                int randomNumber = Random.Range(0, posibleCards.Count);
-                finalCard = playerCards[randomNumber];
+            if (posibleCardsIndex.Count == 0)
+            {             
+                finalCardIndex = Random.Range(0, _gameManager.enemyCards.Count);
             }
-            else if (posibleCards.Count == 1)
+            else if (posibleCardsIndex.Count == 1)
             {
-                finalCard = posibleCards[0];
+                finalCardIndex = posibleCardsIndex[0];
             }
             else
             {
-                int randomNumber = Random.Range(0, posibleCards.Count);
-                finalCard = posibleCards[randomNumber];
+                int randomNumber = Random.Range(0, posibleCardsIndex.Count);
+                finalCardIndex = posibleCardsIndex[randomNumber];
             }
 
+            _gameManager.PlayCard(finalCardIndex, _target[0]);
+            Debug.Log("Estoy contraatacando.Estado: " + state.ToString());
             //Spawnea la carta en el sitio
             ClearData("target");
         }
