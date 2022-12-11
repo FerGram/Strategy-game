@@ -7,48 +7,55 @@ public class TaskJoinSiege : TreeNode
 {
     //Esta tarea trata de acompañar a una tropa más fuerte, ya sea con el apoyo de tropas menos costosas
     //como lanzar una bola de fuego en la posición donde posiblemente vayan a aparecer una arqueras enemigas.
-    Card finalCard;
-    private Card[] playerCards;
-    List<Card> posibleCards = new List<Card>();
-    GameObject[] posibleEnemyTroupesPositions = new GameObject[2];
-    private Agent _agent;
-    GameObject[] posibleAllyOffensiveSpawns = new GameObject[2];
-
-    public TaskJoinSiege(Agent agent)
+    
+    private Card[] enemyCards;
+    List<Card> posibleCards = new List<Card>(); 
+    GameManager _gameManager;   
+    public TaskJoinSiege(GameManager gameManager)
     {
-        _agent = agent;
+        _gameManager = gameManager;
     }
 
     public override TreeNodeState Evaluate()
     {
-        Transform _target = (Transform)GetData("target");
+        int finalCardIndex;
+        List<int> posibleCardsIndex = new List<int>();
+        int _target = (int)GetData("target");
+      
         if (_target != null)
         {
-            /*
-            * Falta implementar el coste de las cartas
-            for (int i = 0; i < playerCards.Length; i++)
+            Debug.Log("Estoy uniendome al ataque.");
+            for (int i = 0; i < _gameManager.enemyCards.Count; i++)
             {
-                if(playerCards[i].cost == 1)
+                if (_gameManager.enemyCards[i]._cardSetUp._cardCost < 2 && _gameManager.enemyCards[i]._cardSetUp._cardType == CardSetUp.CARD_TYPE.ARCHER)
                 {
-                    posibleCards.Add(playerCards[i]);
+                    posibleCardsIndex.Add(i);
+                }
+                else
+                {
+                    if(_gameManager.enemyTurnsMana == 2 && _gameManager.enemyCards[i]._cardSetUp._cardType == CardSetUp.CARD_TYPE.BARBARIAN)
+                        posibleCardsIndex.Add(i);
                 }
             }
-            */
 
-            if (posibleCards.Count == 0)
+            if (posibleCardsIndex.Count == 0)
             {
-                int randomNumber = Random.Range(0, posibleCards.Count);
-                finalCard = playerCards[randomNumber];
+                state = TreeNodeState.FAILURE;
+                ClearData("target");
+                return state;
+
+                //finalCardIndex = Random.Range(0, _gameManager.enemyCards.Count);
             }
-            else if (posibleCards.Count == 1)
+            else if (posibleCardsIndex.Count == 1)
             {
-                finalCard = posibleCards[0];
+                finalCardIndex = posibleCardsIndex[0];
             }
             else
             {
-                int randomNumber = Random.Range(0, posibleCards.Count);
-                finalCard = posibleCards[randomNumber];
+                int randomNumber = Random.Range(0, posibleCardsIndex.Count);
+                finalCardIndex = posibleCardsIndex[randomNumber];
             }
+
             /*
             if(finalCard.type == "fireball"){
                 posibleEnemyTroupesPosition[]
@@ -57,8 +64,11 @@ public class TaskJoinSiege : TreeNode
                 posibleAllyOffensiveSpawns[]
             }
             */
-            
+
+            _gameManager.PlayCard(finalCardIndex, _gameManager.enemyTowers[_target]);
             ClearData("target");
+
+            
 
         }
 

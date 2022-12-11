@@ -73,6 +73,7 @@ public class TaskMoveToClosestEntity : TreeNode
 
                 FaceTarget(minDistanceEntity);
 
+                _agent.targetTower = minDistanceEntity.gameObject;
                 _agent.StartNavigation(_currentTarget);
 
                 return TreeNodeState.RUNNING;

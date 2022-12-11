@@ -5,51 +5,52 @@ using UnityEngine;
 
 public class TaskAtack : TreeNode
 {
-    private Agent _agent;
-    private Card[] playerCards;
-    private GameObject agentSpawn;
-    //La tarea atacar pone la unidad lo más atrasada posible, a ser posible un coste 2.
-    public TaskAtack(Agent agent)
+    GameManager _gameManager;    
+       public TaskAtack(GameManager gameManager)
     {
-        _agent = agent;
+        _gameManager = gameManager;
     }
-
     public override TreeNodeState Evaluate()
     {
-        Card finalCard;
-        List<Card> posibleCards = new List<Card>();
-        Transform _target = (Transform)GetData("target");
-        if (_target != null)
+        int finalCard;
+        List<int> posibleCardsIndex = new List<int>();
+        object _target = GetData("target");
+        
+        
+        if (_target == null && _gameManager.currentTurn == GameManager.TURN.ENEMY)
         {
-            /*
-             * Falta implementar el coste de las cartas
-            for (int i = 0; i < playerCards.Length; i++)
+
+           
+            for (int i = 0; i < _gameManager.enemyCards.Count; i++)
             {
-                if(playerCards[i].cost == 2)
+                if (_gameManager.enemyCards[i]._cardSetUp._cardCost == 2)
                 {
-                    posibleCards.Add(playerCards[i]);
+                    posibleCardsIndex.Add(i);
                 }
             }
-            */
 
-            if (posibleCards.Count == 0)
+
+            if (posibleCardsIndex.Count == 0)
             {
-                int randomNumber = Random.Range(0, posibleCards.Count);
-                finalCard = playerCards[randomNumber];
+                finalCard = Random.Range(0, _gameManager.enemyCards.Count);
             }
-            else if(posibleCards.Count == 1)
+            else if (posibleCardsIndex.Count == 1)
             {
-                finalCard = posibleCards[0];
+                finalCard = posibleCardsIndex[0];
             }
             else
             {
-                int randomNumber = Random.Range(0, posibleCards.Count);
-                finalCard = posibleCards[randomNumber];
+                int randomNumber = Random.Range(0, posibleCardsIndex.Count);
+                finalCard = posibleCardsIndex[randomNumber];
             }
 
-            //Spawnea la carta en el sitio
+            Debug.Log("Estoy atacando a secas");
+            _gameManager.PlayCard(finalCard, GameObject.Find("SpawnSafe"));
             ClearData("target");
+            state = TreeNodeState.SUCCESS;
+            return state;
         }
+        
 
         state = TreeNodeState.RUNNING;
         return state;

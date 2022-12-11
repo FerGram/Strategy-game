@@ -5,48 +5,73 @@ using UnityEngine;
 
 public class TaskCounterAtack : TreeNode
 {
-    private Agent _agent;
-    private Card[] playerCards;
-    private GameObject agentSpawn;
+    private GameManager _gameManager;
+    
     //La tarea consiste en defender si es necesario una torre con unidades pequeñas
-    public TaskCounterAtack(Agent agent)
+    public TaskCounterAtack(GameManager gameManager)
     {
-        _agent = agent;
+        _gameManager = gameManager;
     }
 
     public override TreeNodeState Evaluate()
     {
-        Card finalCard;
-        List<Card> posibleCards = new List<Card>();
-        Transform _target = (Transform)GetData("target");
+        int finalCardIndex;
+        List<int> posibleCardsIndex = new List<int>();
+        //Debug.Log(GetData("target").ToString());
+        Debug.Log("Estoy contraatacando.Estado: " + state.ToString());
+        object _target = GetData("target");
+        Debug.Log("Target: " +_target);
         if (_target != null)
         {
-            /*
-             * Falta implementar el coste de las cartas
-            for (int i = 0; i < playerCards.Length; i++)
+
+            int maximumThreat = 0;
+            int towerIndexToDef = 0;
+            for (int i = 0; i < _gameManager.listOfThreats.Length; i++)
             {
-                if(playerCards[i].cost == 2)
+                int currentThreat = _gameManager.listOfThreats[i];
+
+                //Si es la torre grande la amenaza se multiplica x2
+                if (i == 2)
                 {
-                    posibleCards.Add(playerCards[i]);
+                    currentThreat *= 2;
+                }
+
+                if (currentThreat > maximumThreat)
+                {
+                    maximumThreat = currentThreat;
+                    towerIndexToDef = i;
+                }
+
+            }
+
+            for (int i = 0; i < _gameManager.enemyCards.Count; i++)
+            {
+                if(_gameManager.enemyCards[i]._cardSetUp._cardCost < 2)
+                {
+                    posibleCardsIndex.Add(i);
                 }
             }
-            */
 
-            if (posibleCards.Count == 0)
-            {
-                int randomNumber = Random.Range(0, posibleCards.Count);
-                finalCard = playerCards[randomNumber];
+
+            
+
+            if (posibleCardsIndex.Count == 0)
+            {             
+                finalCardIndex = Random.Range(0, _gameManager.enemyCards.Count);
             }
-            else if (posibleCards.Count == 1)
+            else if (posibleCardsIndex.Count == 1)
             {
-                finalCard = posibleCards[0];
+                finalCardIndex = posibleCardsIndex[0];
             }
             else
             {
-                int randomNumber = Random.Range(0, posibleCards.Count);
-                finalCard = posibleCards[randomNumber];
+                int randomNumber = Random.Range(0, posibleCardsIndex.Count);
+                finalCardIndex = posibleCardsIndex[randomNumber];
             }
 
+            _gameManager.PlayCard(finalCardIndex, towerIndexToDef);
+            
+            Debug.Log("Torre a defender: " + towerIndexToDef.ToString());
             //Spawnea la carta en el sitio
             ClearData("target");
         }

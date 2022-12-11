@@ -12,9 +12,11 @@ public class Agent : MonoBehaviour
 
     [Header("Navigation")]
     [SerializeField] protected Pathfinder _pathfinder;
+    [SerializeField] public int cost;
 
     private Rigidbody2D _rb;
     private Vector2 _currentTarget;
+    public GameObject targetTower;
     private Coroutine _navigationRoutine;
 
     private void Awake()
