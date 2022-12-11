@@ -16,6 +16,7 @@ public class Agent : MonoBehaviour
 
     private Rigidbody2D _rb;
     private Vector2 _currentTarget;
+    public GameObject targetTower;
     private Coroutine _navigationRoutine;
 
     private void Awake()

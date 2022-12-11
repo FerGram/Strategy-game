@@ -17,9 +17,10 @@ public class TaskWaitTurn : TreeNode
 
     public override TreeNodeState Evaluate()
     {
-        List<int> _target = (List<int>)GetData("target");
+        object _target = GetData("target");
         if (_target == null)
         {
+            Debug.Log("Estoy guardando turno.");
             _gameManager.StoreTurn();
             ClearData("target");
         }

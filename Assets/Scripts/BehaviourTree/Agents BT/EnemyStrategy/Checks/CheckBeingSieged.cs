@@ -18,10 +18,12 @@ public class CheckBeingSieged : TreeNode
 
     public override TreeNodeState Evaluate()
     {
-        object t = GetData("target");
+        object t = parent.GetData("target");
 
-        if(t == null)
+        
+        if (t == null)
         {
+            
             listOfThreats = _gameManager.listOfThreats;
             int maximumThreat = 0;
             int towerIndexToDef = 0;
@@ -40,6 +42,7 @@ public class CheckBeingSieged : TreeNode
                 {
                     maximumThreat = currentThreat;
                     towerIndexToDef = i;
+                    
                 }
                     
             }
@@ -51,14 +54,16 @@ public class CheckBeingSieged : TreeNode
                 state = TreeNodeState.SUCCESS;
                 return state;
             }
-            state = TreeNodeState.FAILURE;
-            return state;
+
+
+            
         }
 
 
-        state = TreeNodeState.SUCCESS;
-        Debug.Log("Mirando si está asediado. Estado: " + state.ToString());
         
+        
+
+        state = TreeNodeState.FAILURE;
         return state;
 
     }

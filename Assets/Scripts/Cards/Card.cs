@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using DG.Tweening;
+using static GameManager;
 
 public class Card : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -13,6 +14,7 @@ public class Card : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHand
     private RectTransform _rectTransform;
     private Vector3 _defaultPosition;
     private Vector3 _defaultScale;
+    private GameManager _gameManager;
 
     private void Awake()
     {
@@ -20,44 +22,61 @@ public class Card : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHand
         _defaultScale = _rectTransform.localScale;
 
         GetComponent<Image>().sprite = _cardSetUp._cardSprite;
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        _defaultPosition = _rectTransform.position;
+        Debug.Log("ALLY MANA: " + _gameManager.allyTurnsMana.ToString());
+        Debug.Log("ALLY CARD COST: " + _cardSetUp._cardCost.ToString());
+        if (_gameManager.currentTurn == GameManager.TURN.ALLY && _gameManager.allyTurnsMana >= _cardSetUp._cardCost)
+        {
+            _defaultPosition = _rectTransform.position;
+            
+        }        
     }
     public void OnDrag(PointerEventData eventData)
     {
-        _rectTransform.position = Input.mousePosition;
+        if (_gameManager.currentTurn == GameManager.TURN.ALLY && _gameManager.allyTurnsMana >= _cardSetUp._cardCost)
+        {
+            _rectTransform.position = Input.mousePosition;
+        }    
     }
     public void OnEndDrag(PointerEventData eventData)
     {
-        List<RaycastResult> results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventData, results);
-
-        bool insideBattleField = true;
-
-        foreach (var rayResult in results)
+        if (_gameManager.currentTurn == GameManager.TURN.ALLY && _gameManager.allyTurnsMana >= _cardSetUp._cardCost)
         {
-            if (rayResult.gameObject.GetComponent<Deck>())
+            
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(eventData, results);
+
+            bool insideBattleField = true;
+
+            foreach (var rayResult in results)
             {
-                insideBattleField = false;
-                _rectTransform.position = _defaultPosition;
-                break;
+                if (rayResult.gameObject.GetComponent<Deck>())
+                {
+                    insideBattleField = false;
+                    _rectTransform.position = _defaultPosition;
+                    break;
+                }
+            }
+            if (insideBattleField)
+            {
+                Vector3 spawnPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                spawnPos.z = 1;
+
+                //TODO: set parent (extra argument)
+                Instantiate(_cardSetUp._instantiablePrefab,
+                            spawnPos,
+                            Quaternion.identity);
+                
+                Destroy(gameObject);
+                _gameManager.allyTurnsMana -= _cardSetUp._cardCost;
+                _gameManager.PassTurnCardDragged();
             }
         }
-        if (insideBattleField)
-        {
-            Vector3 spawnPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            spawnPos.z = 1;
-
-            //TODO: set parent (extra argument)
-            Instantiate(_cardSetUp._instantiablePrefab, 
-                        spawnPos, 
-                        Quaternion.identity);
-
-            Destroy(gameObject);
-        }
+        
     }
 
     public void OnPointerEnter(PointerEventData eventData)

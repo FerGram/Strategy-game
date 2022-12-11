@@ -32,7 +32,7 @@ public class CheckAtacking : TreeNode
             return state;
         }
 
-        state = TreeNodeState.SUCCESS;
+        state = TreeNodeState.FAILURE;
         return state;
 
     }

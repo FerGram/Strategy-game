@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Tower : MonoBehaviour
@@ -30,21 +31,29 @@ public class Tower : MonoBehaviour
 
     public void RecalculateThreat()
     {
+        //print("Recalcular amenaza.");
         GameObject[] agentList = FindGameObjectsInLayer("Agents");
         int temporalThreat = 0;
-        foreach (var agentGameobject in agentList)
-        {           
-            if (agentGameobject.CompareTag("Ally")){
-                temporalThreat += agentGameobject.GetComponent<Agent>().cost;
-            }
-            else
-            {
-                if(Vector2.Distance(transform.position, agentGameobject.transform.position) <= defendingRadius)
-                    temporalThreat -= agentGameobject.GetComponent<Agent>().cost;
-            }
-        }
 
-        threatLevel = temporalThreat;
+        if(agentList != null)
+        {
+            foreach (var agentGameobject in agentList)
+            {
+                if (agentGameobject.CompareTag("Player") && agentGameobject.GetComponent<Agent>().targetTower == gameObject)
+                {
+
+                    temporalThreat += agentGameobject.GetComponent<Agent>().cost;
+                }
+                else
+                {
+                    if (Vector2.Distance(transform.position, agentGameobject.transform.position) <= defendingRadius)
+                        temporalThreat -= agentGameobject.GetComponent<Agent>().cost;
+                }
+            }
+
+            threatLevel = temporalThreat;
+        }
+        
     }
 
     private GameObject[] FindGameObjectsInLayer(string layer)
@@ -60,6 +69,11 @@ public class Tower : MonoBehaviour
         if (objectsInLayer.Count == 0) return null;
 
         return objectsInLayer.ToArray();
+    }
+
+    void OnDrawGizmos()
+    {
+        Handles.Label(transform.position, threatLevel.ToString());
     }
 }
 

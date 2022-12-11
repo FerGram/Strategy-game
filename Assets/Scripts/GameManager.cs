@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
         ALLY, ENEMY, SIMULATION
     }
     public TURN currentTurn;
-    private bool canDoTurn = true;
+    [SerializeField] private bool canDoTurn = true;
     [SerializeField] private int turnDuration;
     [SerializeField] private int simDuration;
     [SerializeField] private float simSpeed;
@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     public float timer;
     public float turnTimer;
     public float simTimer;
-    private TURN nextTurn;
+    [SerializeField] TURN nextTurn;
     [SerializeField] GameObject timerObject;
 
     [SerializeField] private GameObject allyTurnCounter;
@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     
     private void Awake()
     {
+        Time.timeScale = 0.5f;
         currentTurn = TURN.ALLY;
         nextTurn = TURN.ENEMY;
         timer = gameDuration;
@@ -51,14 +52,14 @@ public class GameManager : MonoBehaviour
         enemyCards = new List<Card>();
         CreateDeck();
         allyTurnsMana = 1;
-        enemyTurnsMana = 1;
-        
+        enemyTurnsMana = 1;        
     }
 
     private void Update()
     {
         DisplayTime();
         DisplayTurns();
+        CalculateListOfThreats();
     }
 
     private void DisplayTurns()
@@ -74,6 +75,7 @@ public class GameManager : MonoBehaviour
         else if(currentTurn == TURN.ENEMY)
         {
             enemyTurnText.GetComponent<TextMeshProUGUI>().color = Color.red;
+            
         }
         else
         {
@@ -97,21 +99,27 @@ public class GameManager : MonoBehaviour
 
         if(turnTimer <= 0.0f)
         {
-            currentTurn = TURN.SIMULATION;
-            turnTimer = turnDuration;
+            StoreTurn();            
         }
         else if(simTimer <= 0.0f)
         {
+            Time.timeScale = 0.5f;
             currentTurn = nextTurn;
-            canDoTurn = true;
+            
             if(currentTurn == TURN.ALLY)
             {
+                canDoTurn = true;
                 nextTurn = TURN.ENEMY;
+                if (allyTurnsMana == 0)
+                    allyTurnsMana = 1;
             }
             else
             {
                 nextTurn = TURN.ALLY;
-                CalculateListOfThreats();
+               
+                StartCoroutine("TakeDecission");
+                if (enemyTurnsMana == 0)
+                    enemyTurnsMana = 1;
             }
             simTimer = simDuration;
         }
@@ -122,7 +130,12 @@ public class GameManager : MonoBehaviour
 
 
     }
-
+    public void PassTurnCardDragged()
+    {        
+        currentTurn = TURN.SIMULATION;
+        Time.timeScale = 1.0f;
+        turnTimer = turnDuration;
+    }
     private void CreateDeck()
     {
         for (int i = 0; i < deckLength; i++)
@@ -133,9 +146,17 @@ public class GameManager : MonoBehaviour
             enemyCards.Add(newCard);
             print(newCard._cardSetUp);
         }
-    }       
+    }     
+    
+    private void ChangeCard()
+    {
+        Card newCard = new Card();
+        int randomInt = UnityEngine.Random.Range(0, posibleCards.Length);
+        newCard._cardSetUp = posibleCards[randomInt];
+        enemyCards.Add(newCard);
+    }
 
-    private void CalculateListOfThreats()
+    public void CalculateListOfThreats()
     {
         for (int i = 0; i < enemyTowers.Length; i++)
         {
@@ -152,9 +173,12 @@ public class GameManager : MonoBehaviour
         {
             print("Juega carta.");
             Vector2 randomPosition = new Vector2(enemyTowers[towerIndex].transform.position.x, enemyTowers[towerIndex].transform.position.y) + UnityEngine.Random.insideUnitCircle * spawnRadius;
-            Instantiate(enemyCards[cardIndex]._cardSetUp._instantiablePrefab,randomPosition, Quaternion.identity);
+            GameObject unit = Instantiate(enemyCards[cardIndex]._cardSetUp._instantiablePrefab,randomPosition, Quaternion.identity);
+            unit.tag = "Enemy";
             //Coger otra carta nueva para ese hueco
             canDoTurn = false;
+            PassTurnCardDragged();
+            ChangeCard();
         }
         
     }
@@ -164,7 +188,13 @@ public class GameManager : MonoBehaviour
         if (canDoTurn && currentTurn == TURN.ENEMY)
         {
             print("Juega carta.");
+            Vector2 randomPosition = new Vector2(spawn.transform.position.x, spawn.transform.position.y) + UnityEngine.Random.insideUnitCircle * spawnRadius;
+            GameObject unit = Instantiate(enemyCards[cardIndex]._cardSetUp._instantiablePrefab, randomPosition, Quaternion.identity);
+            unit.tag = "Enemy";
+            //Coger otra carta nueva para ese hueco
             canDoTurn = false;
+            PassTurnCardDragged();
+            ChangeCard();
         }
         
     }
@@ -174,19 +204,32 @@ public class GameManager : MonoBehaviour
         
         if (canDoTurn)
         {
-            print("Guarda turno.");
+           
             if (currentTurn == TURN.ALLY && allyTurnsMana < 2)
             {
                 allyTurnsMana++;
+                print("Guarda aliado.");
             }
             else if (currentTurn == TURN.ENEMY && enemyTurnsMana < 2)
             {
                 enemyTurnsMana++;
+                print("Guarda enemigo.");
             }
             canDoTurn = false;
+            currentTurn = TURN.SIMULATION;
+            Time.timeScale = 1.0f;
+            turnTimer = turnDuration;
         }
+
      
     }
 
+    IEnumerator TakeDecission()
+    {
+        Debug.Log("Start make decission");
+        float randomDecissionTime = UnityEngine.Random.Range(0.5f, turnDuration - 0.5f);
+        yield return new WaitForSeconds(randomDecissionTime);
+        canDoTurn = true;
+    }
 
 }

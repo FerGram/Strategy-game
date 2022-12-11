@@ -40,13 +40,19 @@ public class CheckCanWaitTurn : TreeNode
                 if (haveCost2)
                 {
                     parent.parent.SetData("target", cost2Index);
+                    Debug.Log("Hay coste 2 y menos de 2 de mana");
                     state = TreeNodeState.SUCCESS;
                     return state;
                 }
+
                 state = TreeNodeState.FAILURE;
                 return state;
+
             }
-            
+
+            state = TreeNodeState.FAILURE;
+            return state;
+
         }
 
         state = TreeNodeState.SUCCESS;

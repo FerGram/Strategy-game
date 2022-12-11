@@ -20,7 +20,8 @@ public class TaskJoinSiege : TreeNode
     {
         int finalCardIndex;
         List<int> posibleCardsIndex = new List<int>();
-        int _target = (int)GetData("target");
+        object _target = GetData("target");
+        Debug.Log("Estoy uniendome al ataque.");
         if (_target != null)
         {
             for (int i = 0; i < enemyCards.Length; i++)
@@ -53,7 +54,8 @@ public class TaskJoinSiege : TreeNode
                 posibleAllyOffensiveSpawns[]
             }
             */
-            _gameManager.PlayCard(finalCardIndex, _target);
+
+            _gameManager.PlayCard(finalCardIndex, _gameManager.enemyTowers[0]);
             ClearData("target");
 
         }

@@ -18,10 +18,32 @@ public class TaskCounterAtack : TreeNode
         int finalCardIndex;
         List<int> posibleCardsIndex = new List<int>();
         //Debug.Log(GetData("target").ToString());
-        List<int> _target = (List<int>)GetData("target");
+        Debug.Log("Estoy contraatacando.Estado: " + state.ToString());
+        object _target = GetData("target");
+        Debug.Log("Target: " +_target);
         if (_target != null)
         {
-            
+
+            int maximumThreat = 0;
+            int towerIndexToDef = 0;
+            for (int i = 0; i < _gameManager.listOfThreats.Length; i++)
+            {
+                int currentThreat = _gameManager.listOfThreats[i];
+
+                //Si es la torre grande la amenaza se multiplica x2
+                if (i == 2)
+                {
+                    currentThreat *= 2;
+                }
+
+                if (currentThreat > maximumThreat)
+                {
+                    maximumThreat = currentThreat;
+                    towerIndexToDef = i;
+                }
+
+            }
+
             for (int i = 0; i < _gameManager.enemyCards.Count; i++)
             {
                 if(_gameManager.enemyCards[i]._cardSetUp._cardCost < 2)
@@ -29,6 +51,8 @@ public class TaskCounterAtack : TreeNode
                     posibleCardsIndex.Add(i);
                 }
             }
+
+
             
 
             if (posibleCardsIndex.Count == 0)
@@ -45,8 +69,9 @@ public class TaskCounterAtack : TreeNode
                 finalCardIndex = posibleCardsIndex[randomNumber];
             }
 
-            _gameManager.PlayCard(finalCardIndex, _target[0]);
-            Debug.Log("Estoy contraatacando.Estado: " + state.ToString());
+            _gameManager.PlayCard(finalCardIndex, towerIndexToDef);
+            
+            Debug.Log("Torre a defender: " + towerIndexToDef.ToString());
             //Spawnea la carta en el sitio
             ClearData("target");
         }
