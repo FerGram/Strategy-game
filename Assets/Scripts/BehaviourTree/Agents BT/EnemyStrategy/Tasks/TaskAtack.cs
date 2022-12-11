@@ -15,14 +15,15 @@ public class TaskAtack : TreeNode
         int finalCard;
         List<int> posibleCardsIndex = new List<int>();
         object _target = GetData("target");
-        Debug.Log("Estoy atacando a secas");
-        if (_target != null)
-        {           
-            
-            
+        
+        
+        if (_target == null && _gameManager.currentTurn == GameManager.TURN.ENEMY)
+        {
+
+           
             for (int i = 0; i < _gameManager.enemyCards.Count; i++)
             {
-                if (_gameManager.enemyCards[i]._cardSetUp._cardCost < 2)
+                if (_gameManager.enemyCards[i]._cardSetUp._cardCost == 2)
                 {
                     posibleCardsIndex.Add(i);
                 }
@@ -43,14 +44,13 @@ public class TaskAtack : TreeNode
                 finalCard = posibleCardsIndex[randomNumber];
             }
 
-
+            Debug.Log("Estoy atacando a secas");
             _gameManager.PlayCard(finalCard, GameObject.Find("SpawnSafe"));
             ClearData("target");
+            state = TreeNodeState.SUCCESS;
+            return state;
         }
-        else
-        {
-            Debug.Log("Target es null.");
-        }
+        
 
         state = TreeNodeState.RUNNING;
         return state;

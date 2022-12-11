@@ -21,15 +21,17 @@ public class CheckBeingSieged : TreeNode
         object t = parent.GetData("target");
 
         
-        if (t == null)
+        
+        if (t == null && _gameManager.currentTurn == GameManager.TURN.ENEMY)
         {
-            
+            Debug.Log("Miro si me atacan.");
             listOfThreats = _gameManager.listOfThreats;
             int maximumThreat = 0;
             int towerIndexToDef = 0;
 
             for (int i = 0; i < listOfThreats.Length; i++)
             {
+                Debug.Log("Maximum threat: " + maximumThreat.ToString());
                 int currentThreat = listOfThreats[i];
 
                 //Si es la torre grande la amenaza se multiplica x2
@@ -54,15 +56,15 @@ public class CheckBeingSieged : TreeNode
                 state = TreeNodeState.SUCCESS;
                 return state;
             }
+            state = TreeNodeState.FAILURE;
+            return state;
 
 
-            
+
         }
 
 
-        
-        
-
+        ClearData("target");
         state = TreeNodeState.FAILURE;
         return state;
 

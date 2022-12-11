@@ -22,10 +22,11 @@ public class CheckCanWaitTurn : TreeNode
 
     public override TreeNodeState Evaluate()
     {
-        object t = GetData("target");
+        object t = parent.GetData("target");
 
-        if (t == null)
+        if (t == null && _gameManager.currentTurn == GameManager.TURN.ENEMY)
         {
+            Debug.Log("Miro si puedo esperar turno.");
             if (_gameManager.enemyTurnsMana < 2)
             {
                 for (int i = 0; i < _gameManager.enemyCards.Count; i++)
@@ -51,11 +52,12 @@ public class CheckCanWaitTurn : TreeNode
             }
 
             state = TreeNodeState.FAILURE;
+            ClearData("target");
             return state;
 
         }
 
-        state = TreeNodeState.SUCCESS;
+        state = TreeNodeState.FAILURE;
         return state;
 
     }

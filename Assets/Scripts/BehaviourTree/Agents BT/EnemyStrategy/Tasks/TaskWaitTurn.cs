@@ -17,12 +17,14 @@ public class TaskWaitTurn : TreeNode
 
     public override TreeNodeState Evaluate()
     {
-        object _target = GetData("target");
-        if (_target == null)
+        object _target = parent.GetData("target");
+        if (_target != null)
         {
             Debug.Log("Estoy guardando turno.");
             _gameManager.StoreTurn();
+            state = TreeNodeState.SUCCESS;            
             ClearData("target");
+            return state;
         }
 
         state = TreeNodeState.RUNNING;

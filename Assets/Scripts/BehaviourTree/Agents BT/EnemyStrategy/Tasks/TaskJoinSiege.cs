@@ -20,21 +20,31 @@ public class TaskJoinSiege : TreeNode
     {
         int finalCardIndex;
         List<int> posibleCardsIndex = new List<int>();
-        object _target = GetData("target");
-        Debug.Log("Estoy uniendome al ataque.");
+        int _target = (int)GetData("target");
+      
         if (_target != null)
         {
-            for (int i = 0; i < enemyCards.Length; i++)
+            Debug.Log("Estoy uniendome al ataque.");
+            for (int i = 0; i < _gameManager.enemyCards.Count; i++)
             {
-                if (enemyCards[i]._cardSetUp._cardCost < 2)
+                if (_gameManager.enemyCards[i]._cardSetUp._cardCost < 2 && _gameManager.enemyCards[i]._cardSetUp._cardType == CardSetUp.CARD_TYPE.ARCHER)
                 {
                     posibleCardsIndex.Add(i);
+                }
+                else
+                {
+                    if(_gameManager.enemyTurnsMana == 2 && _gameManager.enemyCards[i]._cardSetUp._cardType == CardSetUp.CARD_TYPE.BARBARIAN)
+                        posibleCardsIndex.Add(i);
                 }
             }
 
             if (posibleCardsIndex.Count == 0)
             {
-                finalCardIndex = Random.Range(0, enemyCards.Length);
+                state = TreeNodeState.FAILURE;
+                ClearData("target");
+                return state;
+
+                //finalCardIndex = Random.Range(0, _gameManager.enemyCards.Count);
             }
             else if (posibleCardsIndex.Count == 1)
             {
@@ -55,8 +65,10 @@ public class TaskJoinSiege : TreeNode
             }
             */
 
-            _gameManager.PlayCard(finalCardIndex, _gameManager.enemyTowers[0]);
+            _gameManager.PlayCard(finalCardIndex, _gameManager.enemyTowers[_target]);
             ClearData("target");
+
+            
 
         }
 

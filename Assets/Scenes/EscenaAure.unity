@@ -199,6 +199,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 13101558}
   m_CullTransparentMesh: 1
+--- !u!1 &55706304 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3768446310548309608, guid: 66e0a818ea5cf1a4fbd73f3d66da37a2, type: 3}
+  m_PrefabInstance: {fileID: 331038557}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &103331619
 GameObject:
   m_ObjectHideFlags: 0
@@ -632,7 +637,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 285791366}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.66, y: 3.6, z: 0}
+  m_LocalPosition: {x: 13.98, y: 3.44, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1985,6 +1990,10 @@ MonoBehaviour:
   - {fileID: 496583020}
   - {fileID: 1455366375}
   - {fileID: 1084068589}
+  allyTowers:
+  - {fileID: 55706304}
+  - {fileID: 1011296092}
+  - {fileID: 1253486452}
   spawnRadius: 1
   allyTurnsMana: 0
   enemyTurnsMana: 0
@@ -2272,6 +2281,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1011296092 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3768446310548309608, guid: 66e0a818ea5cf1a4fbd73f3d66da37a2, type: 3}
+  m_PrefabInstance: {fileID: 251666173}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1084068589 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3521974511696810198, guid: fecbf2cf4cb5af040a151efd2f92ea18, type: 3}
@@ -2640,6 +2654,11 @@ Transform:
   m_Father: {fileID: 1370567124}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1253486452 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3521974511696810198, guid: fecbf2cf4cb5af040a151efd2f92ea18, type: 3}
+  m_PrefabInstance: {fileID: 1385899569}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1255552268
 GameObject:
   m_ObjectHideFlags: 0

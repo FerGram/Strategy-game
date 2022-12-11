@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> enemyUnits;
     public List<Card> enemyCards;
     [SerializeField] public GameObject[] enemyTowers;
+    [SerializeField] public GameObject[] allyTowers;
     [SerializeField] private float spawnRadius;
 
     public int allyTurnsMana;   
@@ -140,20 +141,19 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < deckLength; i++)
         {
-            Card newCard = new Card();
-            int randomInt = UnityEngine.Random.Range(0, posibleCards.Length);
-            newCard._cardSetUp = posibleCards[randomInt];
-            enemyCards.Add(newCard);
-            print(newCard._cardSetUp);
+            ChangeCard();
         }
     }     
     
     private void ChangeCard()
     {
-        Card newCard = new Card();
         int randomInt = UnityEngine.Random.Range(0, posibleCards.Length);
-        newCard._cardSetUp = posibleCards[randomInt];
+        CardSetUp _cardSetUp = posibleCards[randomInt];
+        Card newCard = new Card(_cardSetUp);
+
         enemyCards.Add(newCard);
+        print(newCard._cardSetUp);
+        print(enemyCards[0]);
     }
 
     public void CalculateListOfThreats()
@@ -174,9 +174,10 @@ public class GameManager : MonoBehaviour
             print("Juega carta.");
             Vector2 randomPosition = new Vector2(enemyTowers[towerIndex].transform.position.x, enemyTowers[towerIndex].transform.position.y) + UnityEngine.Random.insideUnitCircle * spawnRadius;
             GameObject unit = Instantiate(enemyCards[cardIndex]._cardSetUp._instantiablePrefab,randomPosition, Quaternion.identity);
-            unit.tag = "Enemy";
-            //Coger otra carta nueva para ese hueco
+            unit.tag = "Enemy";           
             canDoTurn = false;
+            enemyTurnsMana -= enemyCards[cardIndex]._cardSetUp._cardCost;
+            enemyCards.RemoveAt(cardIndex);
             PassTurnCardDragged();
             ChangeCard();
         }
@@ -187,12 +188,14 @@ public class GameManager : MonoBehaviour
     {
         if (canDoTurn && currentTurn == TURN.ENEMY)
         {
-            print("Juega carta.");
+            print("Juega carta. " + enemyCards[cardIndex]);
             Vector2 randomPosition = new Vector2(spawn.transform.position.x, spawn.transform.position.y) + UnityEngine.Random.insideUnitCircle * spawnRadius;
             GameObject unit = Instantiate(enemyCards[cardIndex]._cardSetUp._instantiablePrefab, randomPosition, Quaternion.identity);
             unit.tag = "Enemy";
             //Coger otra carta nueva para ese hueco
             canDoTurn = false;
+            enemyTurnsMana -= enemyCards[cardIndex]._cardSetUp._cardCost;
+            enemyCards.RemoveAt(cardIndex);
             PassTurnCardDragged();
             ChangeCard();
         }
