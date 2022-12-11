@@ -3474,7 +3474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a978a20e5a504041a11eab9479ef48a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cardSetUp: {fileID: 11400000, guid: f017783800c980f4da77664e7fdfe7da, type: 2}
+  _cardSetUp: {fileID: 11400000, guid: 0727dd8810e0a424e96e0d64f90388a4, type: 2}
   _mouseHoverScale: 1.25
   _mouseHoverTweenDuration: 0.2
 --- !u!1 &1427969969
@@ -4015,7 +4015,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a978a20e5a504041a11eab9479ef48a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cardSetUp: {fileID: 11400000, guid: f017783800c980f4da77664e7fdfe7da, type: 2}
+  _cardSetUp: {fileID: 11400000, guid: e34bac29996ca9643bce606c06acf27d, type: 2}
   _mouseHoverScale: 1.25
   _mouseHoverTweenDuration: 0.2
 --- !u!114 &1626657025
