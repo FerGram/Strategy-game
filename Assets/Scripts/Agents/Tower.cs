@@ -11,7 +11,9 @@ public class Tower : MonoBehaviour
     [SerializeField] float defendingRadius;
 
     [SerializeField] TowerType _towerType;
-
+    [SerializeField] private float attackDamage;    
+    [SerializeField] private float timeBetween;
+    private float attackTime;
     private void OnDestroy()
     {
         switch (_towerType)
@@ -27,6 +29,18 @@ public class Tower : MonoBehaviour
                 break;
         }
             
+    }
+
+    private void Update()
+    {
+        //Ataque de torres
+        attackTime += Time.deltaTime;
+        if (attackTime >= timeBetween)
+        {
+            //target.TakeDamage(attackDamage);
+            attackTime = 0f;
+            
+        }
     }
 
     public void RecalculateThreat()

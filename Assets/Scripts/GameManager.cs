@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -39,6 +40,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject enemyTurnCounter;
     [SerializeField] private GameObject allyTurnText;
     [SerializeField] private GameObject enemyTurnText;
+    [SerializeField] private GameObject endPanel;
+    [SerializeField] private GameObject endText;
+    [SerializeField] private GameObject retryButton;
     
     private void Awake()
     {
@@ -60,6 +64,7 @@ public class GameManager : MonoBehaviour
     {
         DisplayTime();
         DisplayTurns();
+        SomeoneWins();
         CalculateListOfThreats();
     }
 
@@ -130,6 +135,32 @@ public class GameManager : MonoBehaviour
         timerObject.GetComponent<TextMeshProUGUI>().text = string.Format("{0:00}:{1:00}", minutes, seconds);
 
 
+    }
+
+    public void RetryGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    private void SomeoneWins()
+    {
+        if(enemyTowers[2] == null)
+        {
+            Time.timeScale = 0.0f;
+            endPanel.SetActive(true);
+            endText.GetComponent<TextMeshProUGUI>().text = "¡Has ganado! ^_^";
+            retryButton.SetActive(true);
+            
+        }
+        else
+        {
+            if(allyTowers[2] == null)
+            {
+                Time.timeScale = 0.0f;
+                endText.GetComponent<TextMeshProUGUI>().text = "Has perdido... :(";
+                endPanel.SetActive(true);
+                retryButton.SetActive(true);
+            }
+        }
     }
     public void PassTurnCardDragged()
     {        

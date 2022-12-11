@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EntityHealth : MonoBehaviour
 {
-    [SerializeField] float _hp = 5f;
+    [SerializeField] public float _hp = 5f;
     private EntityHealthUI _healthUI;
 
     private void Start()
