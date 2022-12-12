@@ -18,7 +18,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int simDuration;
     [SerializeField] private float simSpeed;
 
-    [SerializeField] private CardSetUp[] posibleCards;
+    [SerializeField] public CardSetUp[] posibleCards;
+    [SerializeField] public GameObject[] cardSpawners;
     [SerializeField] private int deckLength;
 
     public int[] listOfThreats;

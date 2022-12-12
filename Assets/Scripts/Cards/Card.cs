@@ -75,7 +75,17 @@ public class Card : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHand
                 Instantiate(_cardSetUp._instantiablePrefab,
                             spawnPos,
                             Quaternion.identity);
-                
+                GameObject objToSpawn = new GameObject();
+                objToSpawn.AddComponent<Image>();
+                objToSpawn.AddComponent<Card>();
+                objToSpawn.GetComponent<Card>()._cardSetUp = _gameManager.posibleCards[UnityEngine.Random.Range(0, _gameManager.posibleCards.Length)];
+                objToSpawn.GetComponent<Card>()._mouseHoverScale = 1.25f;
+                objToSpawn.GetComponent<Card>()._mouseHoverTweenDuration = 0.2f;
+                objToSpawn.GetComponent<Image>().sprite = objToSpawn.GetComponent<Card>()._cardSetUp._cardSprite;
+
+                objToSpawn.transform.parent = _gameManager.cardSpawners[0].transform;
+                Instantiate(objToSpawn, _gameManager.cardSpawners[0].transform.position, _gameManager.cardSpawners[0].transform.rotation);
+
                 Destroy(gameObject);
                 _gameManager.allyTurnsMana -= _cardSetUp._cardCost;
                 _gameManager.PassTurnCardDragged();

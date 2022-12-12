@@ -8,12 +8,14 @@ public class Tower : MonoBehaviour
     enum TowerType { TowerSmall, TowerKing }
 
     public int threatLevel;
-    [SerializeField] float defendingRadius;
+    [SerializeField] float defendingRadius = 1;
 
     [SerializeField] TowerType _towerType;
-    [SerializeField] private float attackDamage;    
-    [SerializeField] private float timeBetween;
+    [SerializeField] private float attackDamage = 1;
+    [SerializeField] private float timeBetween = 3;
     private float attackTime;
+    private bool isShooting;
+    private GameObject target;
     private void OnDestroy()
     {
         switch (_towerType)
@@ -34,13 +36,35 @@ public class Tower : MonoBehaviour
     private void Update()
     {
         //Ataque de torres
-        attackTime += Time.deltaTime;
-        if (attackTime >= timeBetween)
+        if(target == null)
         {
-            //target.TakeDamage(attackDamage);
-            attackTime = 0f;
+            GameObject[] agentList = FindGameObjectsInLayer("Agents");
+
+            if (agentList != null)
+            {
+                foreach (var agentGameobject in agentList)
+                {
+                    if (gameObject.tag != agentGameobject.tag && Vector3.Distance(agentGameobject.transform.position, transform.position) < defendingRadius)
+                    {
+                        target = agentGameobject;
+                    }
+                }
+            }
             
+
+           
         }
+        else
+        {
+            attackTime += Time.deltaTime;
+            if (attackTime >= timeBetween)
+            {
+                target.GetComponent<EntityHealth>().TakeDamage(attackDamage);
+                attackTime = 0f;
+
+            }
+        }
+       
     }
 
     public void RecalculateThreat()
