@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 
     public int[] listOfThreats;
     public List<GameObject> enemyUnits;
-    public List<Card> enemyCards;
+    public List<CardSetUp> enemyCards;
     [SerializeField] public GameObject[] enemyTowers;
     [SerializeField] public GameObject[] allyTowers;
     [SerializeField] private float spawnRadius;
@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         turnTimer = turnDuration;
         
         listOfThreats = new int[3];
-        enemyCards = new List<Card>();
+        enemyCards = new List<CardSetUp>();
         CreateDeck();
         allyTurnsMana = 1;
         enemyTurnsMana = 1;        
@@ -181,10 +181,9 @@ public class GameManager : MonoBehaviour
     {
         int randomInt = UnityEngine.Random.Range(0, posibleCards.Length);
         CardSetUp _cardSetUp = posibleCards[randomInt];
-        Card newCard = new Card(_cardSetUp);
 
-        enemyCards.Add(newCard);
-        print(newCard._cardSetUp);
+        enemyCards.Add(_cardSetUp);
+        print(_cardSetUp);
         print(enemyCards[0]);
     }
 
@@ -205,10 +204,10 @@ public class GameManager : MonoBehaviour
         {
             print("Juega carta.");
             Vector2 randomPosition = new Vector2(enemyTowers[towerIndex].transform.position.x, enemyTowers[towerIndex].transform.position.y) + UnityEngine.Random.insideUnitCircle * spawnRadius;
-            GameObject unit = Instantiate(enemyCards[cardIndex]._cardSetUp._instantiablePrefab,randomPosition, Quaternion.identity);
+            GameObject unit = Instantiate(enemyCards[cardIndex]._instantiablePrefab,randomPosition, Quaternion.identity);
             unit.tag = "Enemy";           
             canDoTurn = false;
-            enemyTurnsMana -= enemyCards[cardIndex]._cardSetUp._cardCost;
+            enemyTurnsMana -= enemyCards[cardIndex]._cardCost;
             enemyCards.RemoveAt(cardIndex);
             PassTurnCardDragged();
             ChangeCard();
@@ -222,11 +221,11 @@ public class GameManager : MonoBehaviour
         {
             print("Juega carta. " + enemyCards[cardIndex]);
             Vector2 randomPosition = new Vector2(spawn.transform.position.x, spawn.transform.position.y) + UnityEngine.Random.insideUnitCircle * spawnRadius;
-            GameObject unit = Instantiate(enemyCards[cardIndex]._cardSetUp._instantiablePrefab, randomPosition, Quaternion.identity);
+            GameObject unit = Instantiate(enemyCards[cardIndex]._instantiablePrefab, randomPosition, Quaternion.identity);
             unit.tag = "Enemy";
             //Coger otra carta nueva para ese hueco
             canDoTurn = false;
-            enemyTurnsMana -= enemyCards[cardIndex]._cardSetUp._cardCost;
+            enemyTurnsMana -= enemyCards[cardIndex]._cardCost;
             enemyCards.RemoveAt(cardIndex);
             PassTurnCardDragged();
             ChangeCard();

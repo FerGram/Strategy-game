@@ -31,7 +31,7 @@ public class CheckCanWaitTurn : TreeNode
             {
                 for (int i = 0; i < _gameManager.enemyCards.Count; i++)
                 {
-                    if(_gameManager.enemyCards[i]._cardSetUp._cardCost == 2)
+                    if(_gameManager.enemyCards[i]._cardCost == 2)
                     {
                         haveCost2 = true;
                         cost2Index.Add(i);

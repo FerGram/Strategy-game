@@ -7,11 +7,6 @@ using static GameManager;
 
 public class Card : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    public  Card(CardSetUp cardSetUp)
-    {
-        _cardSetUp = cardSetUp;
-    }
-
     public CardSetUp _cardSetUp;
     [SerializeField] float _mouseHoverScale = 1.25f;
     [SerializeField] float _mouseHoverTweenDuration = 0.2f;
@@ -20,6 +15,11 @@ public class Card : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHand
     private Vector3 _defaultPosition;
     private Vector3 _defaultScale;
     private GameManager _gameManager;
+
+    public void SetCardSetup(CardSetUp setup)
+    {
+        _cardSetUp = setup;
+    }
 
     private void Awake()
     {

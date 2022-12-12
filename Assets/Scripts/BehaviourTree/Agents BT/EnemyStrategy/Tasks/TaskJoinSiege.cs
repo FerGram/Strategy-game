@@ -27,13 +27,13 @@ public class TaskJoinSiege : TreeNode
             Debug.Log("Estoy uniendome al ataque.");
             for (int i = 0; i < _gameManager.enemyCards.Count; i++)
             {
-                if (_gameManager.enemyCards[i]._cardSetUp._cardCost < 2 && _gameManager.enemyCards[i]._cardSetUp._cardType == CardSetUp.CARD_TYPE.ARCHER)
+                if (_gameManager.enemyCards[i]._cardCost < 2 && _gameManager.enemyCards[i]._cardType == CardSetUp.CARD_TYPE.ARCHER)
                 {
                     posibleCardsIndex.Add(i);
                 }
                 else
                 {
-                    if(_gameManager.enemyTurnsMana == 2 && _gameManager.enemyCards[i]._cardSetUp._cardType == CardSetUp.CARD_TYPE.BARBARIAN)
+                    if(_gameManager.enemyTurnsMana == 2 && _gameManager.enemyCards[i]._cardType == CardSetUp.CARD_TYPE.BARBARIAN)
                         posibleCardsIndex.Add(i);
                 }
             }
