@@ -54,6 +54,7 @@ MonoBehaviour:
   _stoppingNodeDistance: 0.3
   _pathfinder: {fileID: 0}
   cost: 1
+  targetTower: {fileID: 0}
 --- !u!114 &1917781376037315087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,7 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 810ed62b3714a374e91f46a00912b3f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 1
+  attackRange: 2
   attackDamage: 0.2
   timeBetweenAttacks: 0.5
   _targetBuildings: 0

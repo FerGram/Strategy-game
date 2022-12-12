@@ -35,6 +35,7 @@ public class Bomb : MonoBehaviour
         {
             _animator.SetTrigger(EXPLOSION_TRIGGER_NAME);
             _hasExploded = true;
+            GetComponent<AudioSource>().Play();
         } 
     }
 

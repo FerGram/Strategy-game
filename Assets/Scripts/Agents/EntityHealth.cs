@@ -19,7 +19,11 @@ public class EntityHealth : MonoBehaviour
         _hp -= damage;
 
         if (_healthUI != null) _healthUI.UpdateHealthUI(_hp);
-        if (_hp <= 0) Destroy(gameObject);
+        if (_hp <= 0)
+        {
+            if(gameObject.layer == 6) GetComponent<AudioSource>().Play(); //si es un edificio
+            Destroy(gameObject);
+        }
     }
 
     public float GetHealth() => _hp;

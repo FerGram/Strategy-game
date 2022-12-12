@@ -16,6 +16,7 @@ public class Tower : MonoBehaviour
     private float attackTime;
     private bool isShooting;
     private GameObject target;
+
     private void OnDestroy()
     {
         switch (_towerType)
