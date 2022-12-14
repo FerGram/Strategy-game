@@ -46,7 +46,7 @@ static class Algorithm
         watch.Stop();
         UnityEngine.Debug.Log("Main loop took: " + watch.ElapsedMilliseconds + " ms");
 #endif
-        if (currentNode == end) return GetPath(currentNode);
+        if (currentNode == end) return GetPath(start, currentNode);
         else
         {
             UnityEngine.Debug.LogWarning("Queue length reached 0");
@@ -97,7 +97,14 @@ static class Algorithm
                 }
             }
         }
-        if (pathSuccess) return GetPath(currentNode);
+        for (int i = 0; i < grid.Width; i++)
+        {
+            for (int j = 0; j < grid.Height; j++)
+            {
+                grid.GetNodeAt(i, j).ResetCosts();
+            }
+        }
+        if (pathSuccess) return GetPath(start, currentNode);
         else
         {
             UnityEngine.Debug.LogWarning("Queue length reached 0");
@@ -105,12 +112,12 @@ static class Algorithm
         }
     }
 
-    static private List<Node> GetPath(Node endNode)
+    static private List<Node> GetPath(Node startNode, Node endNode)
     {
         List<Node> path = new List<Node>();
         Node currentNode = endNode;
 
-        while (currentNode.GetCameFromNode() != null)
+        while (currentNode.GetCameFromNode() != startNode)
         {
             path.Add(currentNode);
             currentNode = currentNode.GetCameFromNode();
@@ -118,23 +125,6 @@ static class Algorithm
         path.Reverse();
         return path;
     }
-
-    //static Vector3[] SimplifyPath(List<Node> path)
-    //{
-    //    List<Vector3> waypoints = new List<Vector3>();
-    //    Vector3 directionOld = Vector3.zero;
-
-    //    for (int i = 1; i < path.Count; i++)
-    //    {
-    //        Vector3 directionNew = new Vector3(path[i - 1].gridX - path[i].gridX, path[i - 1].gridY - path[i].gridY);
-    //        if (directionNew != directionOld)
-    //        {
-    //            waypoints.Add(path[i].worldPosition);
-    //        }
-    //        directionOld = directionNew;
-    //    }
-    //    return waypoints.ToArray();
-    //}
 
     static int GetDistance(Node nodeA, Node nodeB)
     {

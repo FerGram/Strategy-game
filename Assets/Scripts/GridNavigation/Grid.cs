@@ -2,18 +2,18 @@
 
 public class Grid
 {
-    private int _width;         //Amount of horizontal nodes
-    private int _height;        //Amount of vertical nodes
+    public int Width { get; private set; }         //Amount of horizontal nodes
+    public int Height { get; private set; }       //Amount of vertical nodes
     private float _nodeSize;    //If set to 1, the node will take up the space of 1 Unity unit
 
     private Node[,] _nodes;
 
     public Grid(int gridWidthSize, int gridHeightSize, float gridNodeSize, bool drawGrid)
     {
-        _width = gridWidthSize;
-        _height = gridHeightSize;
+        Width = gridWidthSize;
+        Height = gridHeightSize;
         _nodeSize = gridNodeSize;
-        _nodes = new Node[_width, _height];
+        _nodes = new Node[Width, Height];
 
         PopulateGrid();
         SetNodesNeighbours();
@@ -23,7 +23,7 @@ public class Grid
 
     public int NodeCount()
     {
-        return _width * _height;
+        return Width * Height;
     }
 
     public Node GetNodeAt(int i, int j)
@@ -36,9 +36,9 @@ public class Grid
     // </summary>
     private void PopulateGrid()
     {
-        for (int i = 0; i < _width; i++)
+        for (int i = 0; i < Width; i++)
         {
-            for (int j = 0; j < _height; j++)
+            for (int j = 0; j < Height; j++)
             {
                 //The extra _nodeSize/2 sets the position to the center instead of corner
                 Vector3 nodePos = new Vector3(i * _nodeSize + _nodeSize / 2, j * _nodeSize + _nodeSize / 2, 0);
@@ -52,19 +52,19 @@ public class Grid
     // </summary>
     private void SetNodesNeighbours()
     {
-        for (int i = 0; i < _width; i++)
+        for (int i = 0; i < Width; i++)
         {
-            for (int j = 0; j < _height; j++)
+            for (int j = 0; j < Height; j++)
             {
                 if (_nodes[i, j] != null && !_nodes[i, j].IsWallNode()) //Currently not checking if neighbour nodes are null
                 {
-                    if (j + 1 < _height                     && !_nodes[i, j + 1].IsWallNode())     _nodes[i, j].SetNeighbour(_nodes[i, j + 1]);          //UP neighbour
-                    if (i + 1 < _width                      && !_nodes[i + 1, j].IsWallNode())     _nodes[i, j].SetNeighbour(_nodes[i + 1, j]);          //RIGHT neighbour
+                    if (j + 1 < Height                     && !_nodes[i, j + 1].IsWallNode())     _nodes[i, j].SetNeighbour(_nodes[i, j + 1]);          //UP neighbour
+                    if (i + 1 < Width                      && !_nodes[i + 1, j].IsWallNode())     _nodes[i, j].SetNeighbour(_nodes[i + 1, j]);          //RIGHT neighbour
                     if (j - 1 >= 0                          && !_nodes[i, j - 1].IsWallNode())     _nodes[i, j].SetNeighbour(_nodes[i, j - 1]);          //DOWN neighbour
                     if (i - 1 >= 0                          && !_nodes[i - 1, j].IsWallNode())     _nodes[i, j].SetNeighbour(_nodes[i - 1, j]);          //LEFT neighbour
-                    if (j + 1 < _height && i - 1 >= 0       && !_nodes[i - 1, j + 1].IsWallNode()) _nodes[i, j].SetNeighbour(_nodes[i - 1, j + 1]);      //UP-LEFT neighbour
-                    if (j + 1 < _height && i + 1 < _width   && !_nodes[i + 1, j + 1].IsWallNode()) _nodes[i, j].SetNeighbour(_nodes[i + 1, j + 1]);      //UP-RIGHT neighbour
-                    if (j - 1 >= 0      && i + 1 < _width   && !_nodes[i + 1, j - 1].IsWallNode()) _nodes[i, j].SetNeighbour(_nodes[i + 1, j - 1]);      //DOWN-RIGHT neighbour
+                    if (j + 1 < Height && i - 1 >= 0       && !_nodes[i - 1, j + 1].IsWallNode()) _nodes[i, j].SetNeighbour(_nodes[i - 1, j + 1]);      //UP-LEFT neighbour
+                    if (j + 1 < Height && i + 1 < Width   && !_nodes[i + 1, j + 1].IsWallNode()) _nodes[i, j].SetNeighbour(_nodes[i + 1, j + 1]);      //UP-RIGHT neighbour
+                    if (j - 1 >= 0      && i + 1 < Width   && !_nodes[i + 1, j - 1].IsWallNode()) _nodes[i, j].SetNeighbour(_nodes[i + 1, j - 1]);      //DOWN-RIGHT neighbour
                     if (j - 1 >= 0      && i - 1 >= 0       && !_nodes[i - 1, j - 1].IsWallNode()) _nodes[i, j].SetNeighbour(_nodes[i - 1, j - 1]);      //DOWN-LEFT neighbour
                 }
             }
@@ -76,9 +76,9 @@ public class Grid
     // </summary>
     public void CleanAllPreviousNodes()
     {
-        for (int i = 0; i < _width; i++)
+        for (int i = 0; i < Width; i++)
         {
-            for (int j = 0; j < _height; j++)
+            for (int j = 0; j < Height; j++)
             {
                 _nodes[i, j].SetCameFromNode(null);
             }
@@ -90,9 +90,9 @@ public class Grid
     // </summary>
     private void DrawGrid(bool drawForever = false)
     {
-        for (int i = 0; i < _width; i++)
+        for (int i = 0; i < Width; i++)
         {
-            for (int j = 0; j < _height; j++)
+            for (int j = 0; j < Height; j++)
             {
                 DrawNode(_nodes[i, j], drawForever);
             }

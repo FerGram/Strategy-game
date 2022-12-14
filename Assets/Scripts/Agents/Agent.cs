@@ -31,6 +31,7 @@ public class Agent : MonoBehaviour
     public void StartNavigation(Vector2 to)
     {
         CancelNavigation();
+        Debug.Log("Start Navigation");
 
         this._rb.velocity = Vector2.zero;
 

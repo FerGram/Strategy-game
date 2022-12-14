@@ -74,5 +74,11 @@ public class Node : IHeapItem<Node>
 			heapIndex = value;
 		}
 	}
+
+	public void ResetCosts()
+    {
+		gCost = 0;
+		hCost = 0;
+    }
 }
 

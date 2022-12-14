@@ -70,6 +70,7 @@ public class Pathfinder : MonoBehaviour
                 if (visited.Contains(neighbor)) continue;
                 pending.Enqueue(neighbor);
             }
+            Debug.Log("Reee");
         }
         Debug.Log(String.Format("Position of closest node to ({0}, {1}): ({2}, {3})", pos.x, pos.y, closest.GetPosition().x, closest.GetPosition().y));
         return closest;
