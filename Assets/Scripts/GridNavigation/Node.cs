@@ -2,13 +2,24 @@
 using System.Collections.Generic;
 
 
-public class Node
+public class Node : IHeapItem<Node>
 {
     private Vector2 _nodePosition;
     private List<Node> _neighbours;
     private Node _cameFromNode;
 
-    private bool _isWallNode = false;
+	public int fCost
+	{
+		get
+		{
+			return gCost + hCost;
+		}
+	}
+	public int gCost;
+	public int hCost;
+	int heapIndex;
+
+	private bool _isWallNode = false;
 
     public Node(Vector2 position, float size)
     {
@@ -42,5 +53,26 @@ public class Node
     }
 
     public bool IsWallNode() => _isWallNode;
+
+	public int CompareTo(Node nodeToCompare)
+	{
+		int compare = fCost.CompareTo(nodeToCompare.fCost);
+		if (compare == 0)
+		{
+			compare = hCost.CompareTo(nodeToCompare.hCost);
+		}
+		return -compare;
+	}
+	public int HeapIndex
+	{
+		get
+		{
+			return heapIndex;
+		}
+		set
+		{
+			heapIndex = value;
+		}
+	}
 }
 

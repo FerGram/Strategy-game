@@ -31,7 +31,7 @@ public class Pathfinder : MonoBehaviour
         _startNode = GetClosestNodeToPosition(rb.position);
         _endNode = GetClosestNodeToPosition(endPos);
 
-        List<Node> path = Algorithm.BFSAlgorithm(_grid, _startNode, _endNode);
+        List<Node> path = Algorithm.AStarAlgorithm(_grid, _startNode, _endNode);
 
         if (path != null)
         {
@@ -48,27 +48,30 @@ public class Pathfinder : MonoBehaviour
 
     private Node GetClosestNodeToPosition(Vector2 pos)
     {
-        float minDistance = Mathf.Infinity;
-        Node closest = null;
+        Vector2 indexPos = pos / _gridNodeSize;
+        indexPos.x = Mathf.Round(indexPos.x);
+        indexPos.y = Mathf.Round(indexPos.y);
 
-        for (int i = 0; i < _gridWidthResolution; i++)
+        Node closest = _grid.GetNodeAt((int)indexPos.x, (int)indexPos.y);
+
+        Queue<Node> pending = new Queue<Node>();
+        HashSet<Node> visited = new HashSet<Node>();
+
+        pending.Enqueue(closest);
+
+        while (closest.IsWallNode())
         {
-            for (int j = 0; j < _gridHeightResolution; j++)
-            {
-                //Distance between two points c2 = (xA − xB)2 + (yA − yB)2
-                //There's no need to do the square root for this function (expensive operation for CPU)
+            closest = pending.Dequeue();
+            visited.Add(closest);
 
-                Node currentNode = _grid.GetNodeAt(i, j);
-                Vector3 nodePos = currentNode.GetPosition();
-                float distanceSquaredToPos = Mathf.Pow(pos.x - nodePos.x, 2) + Mathf.Pow(pos.y - nodePos.y, 2);
-                if (currentNode != null && distanceSquaredToPos < minDistance)
-                {
-                    closest = currentNode;
-                    minDistance = distanceSquaredToPos;
-                }
+            List<Node> neighbors = closest.GetNeighbours();
+            foreach (var neighbor in neighbors)
+            {
+                if (visited.Contains(neighbor)) continue;
+                pending.Enqueue(neighbor);
             }
         }
-
+        Debug.Log(String.Format("Position of closest node to ({0}, {1}): ({2}, {3})", pos.x, pos.y, closest.GetPosition().x, closest.GetPosition().y));
         return closest;
     }
 }

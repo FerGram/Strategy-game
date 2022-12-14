@@ -21,6 +21,11 @@ public class Grid
         if (drawGrid) DrawGrid(true);
     }
 
+    public int NodeCount()
+    {
+        return _width * _height;
+    }
+
     public Node GetNodeAt(int i, int j)
     {
         return _nodes[i, j];
