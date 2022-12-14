@@ -52,8 +52,17 @@ public class Pathfinder : MonoBehaviour
         indexPos.x = Mathf.Round(indexPos.x);
         indexPos.y = Mathf.Round(indexPos.y);
 
+        //This is to check that there's a node assigned even if we spawn outside the bounds
+        //of the array
+        if (indexPos.x > _gridWidthResolution) indexPos.x = _gridWidthResolution - 1;
+        if (indexPos.y > _gridHeightResolution) indexPos.y = _gridHeightResolution - 1;
+        if (indexPos.x < 0) indexPos.x = 0;
+        if (indexPos.y < 0) indexPos.y = 0;
+
         Node closest = _grid.GetNodeAt((int)indexPos.x, (int)indexPos.y);
 
+        //If the target node is a wall (a.k.a has a collider) we search in its surroundings
+        //until we find a suitable node
         Queue<Node> pending = new Queue<Node>();
         HashSet<Node> visited = new HashSet<Node>();
 

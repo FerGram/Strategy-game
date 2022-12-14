@@ -7,7 +7,7 @@ using DG.Tweening;
 [RequireComponent(typeof(Image))]
 public class Card : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    public CardSetUp _cardSetUp;
+    [SerializeField] CardSetUp _cardSetUp;
     [SerializeField] float _mouseHoverScale = 1.25f;
     [SerializeField] float _mouseHoverTweenDuration = 0.2f;
 
@@ -19,6 +19,7 @@ public class Card : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHand
     public void SetCardSetup(CardSetUp setup)
     {
         _cardSetUp = setup;
+        GetComponent<Image>().sprite = _cardSetUp._cardSprite;
     }
 
     private void Awake()
@@ -26,7 +27,8 @@ public class Card : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHand
         _rectTransform = GetComponent<RectTransform>();
         _defaultScale = _rectTransform.localScale;
 
-        GetComponent<Image>().sprite = _cardSetUp._cardSprite;
+        if (_cardSetUp != null) GetComponent<Image>().sprite = _cardSetUp._cardSprite;
+
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
@@ -71,22 +73,12 @@ public class Card : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHand
                 Vector3 spawnPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 spawnPos.z = 1;
 
-                //TODO: set parent (extra argument)
-                Instantiate(_cardSetUp._instantiablePrefab,
-                            spawnPos,
-                            Quaternion.identity);
-                GameObject objToSpawn = new GameObject();
-                objToSpawn.AddComponent<Image>();
-                objToSpawn.AddComponent<Card>();
-                objToSpawn.GetComponent<Card>()._cardSetUp = _gameManager.posibleCards[UnityEngine.Random.Range(0, _gameManager.posibleCards.Length)];
-                objToSpawn.GetComponent<Card>()._mouseHoverScale = 1.25f;
-                objToSpawn.GetComponent<Card>()._mouseHoverTweenDuration = 0.2f;
-                objToSpawn.GetComponent<Image>().sprite = objToSpawn.GetComponent<Card>()._cardSetUp._cardSprite;
-
-                objToSpawn.transform.parent = _gameManager.cardSpawners[0].transform;
-                Instantiate(objToSpawn, _gameManager.cardSpawners[0].transform.position, _gameManager.cardSpawners[0].transform.rotation);
+                GameObject newAgent = Instantiate(_cardSetUp._instantiablePrefab, spawnPos, Quaternion.identity);
+                newAgent.tag = "Player";
 
                 Destroy(gameObject);
+                GetComponentInParent<Deck>().AddCard(_gameManager.posibleCards[UnityEngine.Random.Range(0, _gameManager.posibleCards.Length)]);
+
                 _gameManager.allyTurnsMana -= _cardSetUp._cardCost;
                 _gameManager.PassTurnCardDragged();
             }
