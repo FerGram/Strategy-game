@@ -194,8 +194,11 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < enemyTowers.Length; i++)
         {
-            enemyTowers[i].GetComponent<Tower>().RecalculateThreat();
-            listOfThreats[i] = enemyTowers[i].GetComponent<Tower>().threatLevel;
+            if (enemyTowers[i] != null)
+            {
+                enemyTowers[i].GetComponent<Tower>().RecalculateThreat();
+                listOfThreats[i] = enemyTowers[i].GetComponent<Tower>().threatLevel;
+            }
         }
     }
 
