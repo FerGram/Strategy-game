@@ -18,9 +18,9 @@ public class TaskCounterAtack : TreeNode
         int finalCardIndex;
         List<int> posibleCardsIndex = new List<int>();
         //Debug.Log(GetData("target").ToString());
-        Debug.Log("Estoy contraatacando.Estado: " + state.ToString());
+       // _gameManager.iaStatsText.text += "\nEstoy contraatacando. Estado: " + state.ToString();
         object _target = GetData("target");
-        Debug.Log("Target: " +_target);
+        _gameManager.iaStatsText.text += "\nTarget: " +_target;
         if (_target != null)
         {
 
@@ -70,8 +70,8 @@ public class TaskCounterAtack : TreeNode
             }
 
             _gameManager.PlayCard(finalCardIndex, towerIndexToDef);
-            
-            Debug.Log("Torre a defender: " + towerIndexToDef.ToString());
+
+            //_gameManager.iaStatsText.text += "\nTorre a defender: " + towerIndexToDef.ToString();
             //Spawnea la carta en el sitio
             ClearData("target");
         }

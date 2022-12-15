@@ -44,7 +44,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject endPanel;
     [SerializeField] private GameObject endText;
     [SerializeField] private GameObject retryButton;
-    
+    [SerializeField] private GameObject iaStatsPanel;
+    [SerializeField] public TextMeshProUGUI iaStatsText;
+
     private void Awake()
     {
         Time.timeScale = 0.5f;
@@ -58,7 +60,7 @@ public class GameManager : MonoBehaviour
         enemyCards = new List<CardSetUp>();
         CreateDeck();
         allyTurnsMana = 1;
-        enemyTurnsMana = 1;        
+        enemyTurnsMana = 1;
     }
 
     private void Update()
@@ -67,6 +69,7 @@ public class GameManager : MonoBehaviour
         DisplayTurns();
         SomeoneWins();
         CalculateListOfThreats();
+        IaStatsActivated();
     }
 
     private void DisplayTurns()
@@ -242,12 +245,12 @@ public class GameManager : MonoBehaviour
             if (currentTurn == TURN.ALLY && allyTurnsMana < 2)
             {
                 allyTurnsMana++;
-                print("Guarda aliado.");
+                iaStatsText.text += "\nGuarda aliado.";
             }
             else if (currentTurn == TURN.ENEMY && enemyTurnsMana < 2)
             {
                 enemyTurnsMana++;
-                print("Guarda enemigo.");
+                iaStatsText.text += "\nGuarda enemigo.";
             }
             canDoTurn = false;
             currentTurn = TURN.SIMULATION;
@@ -257,6 +260,14 @@ public class GameManager : MonoBehaviour
 
      
     }
+
+    private void IaStatsActivated()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && !iaStatsPanel.activeInHierarchy) iaStatsPanel.SetActive(true);
+
+        else if (Input.GetKeyDown(KeyCode.Space) && iaStatsPanel.activeInHierarchy) iaStatsPanel.SetActive(false);
+    }
+
 
     IEnumerator TakeDecission()
     {

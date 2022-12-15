@@ -24,7 +24,8 @@ public class CheckBeingSieged : TreeNode
         
         if (t == null && _gameManager.currentTurn == GameManager.TURN.ENEMY)
         {
-            Debug.Log("Miro si me atacan.");
+
+            // _gameManager.iaStatsText.text += "\nComprobando si estoy siendo atacado...";
             listOfThreats = _gameManager.listOfThreats;
             int maximumThreat = 0;
             int towerIndexToDef = 0;
@@ -45,14 +46,14 @@ public class CheckBeingSieged : TreeNode
                     maximumThreat = currentThreat;
                     towerIndexToDef = i;
                     
-                }
-                    
+                } 
             }
 
             if(maximumThreat > threatIndicator)
             {
-                Debug.Log("Amenaza: " + listOfThreats[towerIndexToDef]);
-                parent.parent.SetData("target", towerIndexToDef); 
+                //_gameManager.iaStatsText.text += "\nAmenaza: " + listOfThreats[towerIndexToDef];
+                parent.parent.SetData("target", towerIndexToDef);
+               // _gameManager.iaStatsText.text += "\nAtacando";
                 state = TreeNodeState.SUCCESS;
                 return state;
             }

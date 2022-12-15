@@ -24,7 +24,7 @@ public class TaskJoinSiege : TreeNode
       
         if (_target != null)
         {
-            Debug.Log("Estoy uniendome al ataque.");
+            //_gameManager.iaStatsText.text += "\nEstoy uniendome al ataque.";
             for (int i = 0; i < _gameManager.enemyCards.Count; i++)
             {
                 if (_gameManager.enemyCards[i]._cardCost < 2 && _gameManager.enemyCards[i]._cardType == CardSetUp.CARD_TYPE.ARCHER)

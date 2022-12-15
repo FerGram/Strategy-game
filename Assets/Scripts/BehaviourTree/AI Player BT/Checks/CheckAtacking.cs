@@ -22,7 +22,7 @@ public class CheckAtacking : TreeNode
 
         if (t == null && _gameManager.currentTurn == GameManager.TURN.ENEMY)
         {
-            Debug.Log("Miro si estoy atacando.");
+            //_gameManager.iaStatsText.text += "\nComprobando si estoy atacando...";
             GameObject[] agentList = FindGameObjectsInLayer("Agents");
             
             if (agentList != null)
