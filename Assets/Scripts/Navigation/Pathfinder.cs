@@ -54,8 +54,8 @@ public class Pathfinder : MonoBehaviour
 
         //This is to check that there's a node assigned even if we spawn outside the bounds
         //of the array
-        if (indexPos.x > _gridWidthResolution) indexPos.x = _gridWidthResolution - 1;
-        if (indexPos.y > _gridHeightResolution) indexPos.y = _gridHeightResolution - 1;
+        if (indexPos.x >= _gridWidthResolution) indexPos.x = _gridWidthResolution - 1;
+        if (indexPos.y >= _gridHeightResolution) indexPos.y = _gridHeightResolution - 1;
         if (indexPos.x < 0) indexPos.x = 0;
         if (indexPos.y < 0) indexPos.y = 0;
 
