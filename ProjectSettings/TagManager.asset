@@ -8,6 +8,7 @@ TagManager:
   - KingTower
   - UI Camera
   - Enemy
+  - BannedSpawnArea
   layers:
   - Default
   - TransparentFX
