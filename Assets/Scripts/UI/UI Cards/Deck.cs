@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Deck : MonoBehaviour
 {
     [SerializeField] int _maxCardAmount = 4;
     [SerializeField] GameObject _cardPrefab;
+    [Space]
+    [SerializeField] GameObject _spawnAreaPanels;
 
 
     public void AddCard(CardSetUp setup)
@@ -27,6 +28,15 @@ public class Deck : MonoBehaviour
         {
             GameObject card = Instantiate(_cardPrefab, transform);
             card.GetComponent<Card>().SetCardSetup(setup);
+        }
+    }
+
+    public void ActivateSpawnPanels(bool active)
+    {
+        if (_spawnAreaPanels != null)
+        {
+            if (active) _spawnAreaPanels.SetActive(true);
+            else _spawnAreaPanels.SetActive(false);
         }
     }
 }

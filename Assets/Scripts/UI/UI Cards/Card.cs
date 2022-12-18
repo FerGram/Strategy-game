@@ -39,7 +39,7 @@ public class Card : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHand
         if (_gameManager.currentTurn == GameManager.TURN.ALLY && _gameManager.allyTurnsMana >= _cardSetUp._cardCost)
         {
             _defaultPosition = _rectTransform.position;
-            
+            GetComponentInParent<Deck>().ActivateSpawnPanels(true);
         }        
     }
     public void OnDrag(PointerEventData eventData)
@@ -61,7 +61,7 @@ public class Card : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHand
 
             foreach (var rayResult in results)
             {
-                if (rayResult.gameObject.GetComponent<Deck>())
+                if (rayResult.gameObject.GetComponent<Deck>() || rayResult.gameObject.CompareTag("BannedSpawnArea"))
                 {
                     insideBattleField = false;
                     _rectTransform.position = _defaultPosition;
@@ -83,7 +83,11 @@ public class Card : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHand
                 _gameManager.PassTurnCardDragged();
             }
         }
-        
+        else if (_gameManager.currentTurn != GameManager.TURN.ALLY)
+        {
+            _rectTransform.position = _defaultPosition;
+        }
+        GetComponentInParent<Deck>().ActivateSpawnPanels(false);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

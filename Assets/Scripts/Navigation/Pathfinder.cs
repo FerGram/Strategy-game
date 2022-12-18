@@ -28,8 +28,8 @@ public class Pathfinder : MonoBehaviour
     }
     public List<Node> GetPath(Rigidbody2D rb, Vector2 endPos)
     {
-        _startNode = GetClosestNodeToPosition(rb.position);
-        _endNode = GetClosestNodeToPosition(endPos);
+        _startNode = GetClosestWalkableNodeToPosition(rb.position);
+        _endNode = GetClosestWalkableNodeToPosition(endPos);
 
         List<Node> path = Algorithm.AStarAlgorithm(_grid, _startNode, _endNode);
 
@@ -46,7 +46,7 @@ public class Pathfinder : MonoBehaviour
         return null;
     }
 
-    private Node GetClosestNodeToPosition(Vector2 pos)
+    private Node GetClosestWalkableNodeToPosition(Vector2 pos)
     {
         Vector2 indexPos = pos / _gridNodeSize;
         indexPos.x = Mathf.Round(indexPos.x);
@@ -68,7 +68,7 @@ public class Pathfinder : MonoBehaviour
 
         pending.Enqueue(closest);
 
-        while (closest.IsWallNode())
+        while (closest.IsWallNode() && pending.Count > 0)
         {
             closest = pending.Dequeue();
             visited.Add(closest);
@@ -79,7 +79,6 @@ public class Pathfinder : MonoBehaviour
                 if (visited.Contains(neighbor)) continue;
                 pending.Enqueue(neighbor);
             }
-            Debug.Log("Reee");
         }
         Debug.Log(String.Format("Position of closest node to ({0}, {1}): ({2}, {3})", pos.x, pos.y, closest.GetPosition().x, closest.GetPosition().y));
         return closest;
