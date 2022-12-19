@@ -226,8 +226,18 @@ public class GameManager : MonoBehaviour
         if (canDoTurn && currentTurn == TURN.ENEMY)
         {
             print("Juega carta. " + enemyCards[cardIndex]);
-            Vector2 randomPosition = new Vector2(spawn.transform.position.x, spawn.transform.position.y) + UnityEngine.Random.insideUnitCircle * spawnRadius;
-            GameObject unit = Instantiate(enemyCards[cardIndex]._instantiablePrefab, randomPosition, Quaternion.identity);
+            GameObject unit = null;
+            if(enemyCards[cardIndex]._cardType != CardSetUp.CARD_TYPE.BOMB)
+            {
+                Vector2 randomPosition = new Vector2(spawn.transform.position.x, spawn.transform.position.y) + UnityEngine.Random.insideUnitCircle * spawnRadius;
+
+                unit = Instantiate(enemyCards[cardIndex]._instantiablePrefab, randomPosition, Quaternion.identity);
+            }
+            else
+            {
+                unit = Instantiate(enemyCards[cardIndex]._instantiablePrefab, spawn.transform.position, Quaternion.identity);
+            }
+          
             unit.tag = "Enemy";
             //Coger otra carta nueva para ese hueco
             canDoTurn = false;

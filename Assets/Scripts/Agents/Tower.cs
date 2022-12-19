@@ -16,6 +16,9 @@ public class Tower : MonoBehaviour
     private float attackTime;
     private bool isShooting;
     private GameObject target;
+    [SerializeField] GameObject advertGo;
+    [SerializeField] GameObject crosshairPrefab;
+    GameObject crosshairEnabled = null;
 
     private void OnDestroy()
     {
@@ -39,6 +42,13 @@ public class Tower : MonoBehaviour
         //Ataque de torres
         if(target == null)
         {
+            if (advertGo.activeSelf == true)
+            {
+                advertGo.SetActive(false);
+                Destroy(crosshairEnabled);
+            }
+                
+            
             GameObject[] agentList = FindGameObjectsInLayer("Agents");
 
             if (agentList != null)
@@ -57,6 +67,17 @@ public class Tower : MonoBehaviour
         }
         else
         {
+            if(advertGo.activeSelf == false)
+            {
+                advertGo.SetActive(true);
+                crosshairEnabled = Instantiate(crosshairPrefab, target.transform.position, Quaternion.identity);
+            }
+               
+            if(crosshairEnabled != null)
+            {
+                crosshairEnabled.transform.position = target.transform.position;
+            }
+            
             attackTime += Time.deltaTime;
             if (attackTime >= timeBetween)
             {

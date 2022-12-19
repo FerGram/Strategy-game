@@ -69,7 +69,36 @@ public class TaskCounterAtack : TreeNode
                 finalCardIndex = posibleCardsIndex[randomNumber];
             }
 
-            _gameManager.PlayCard(finalCardIndex, towerIndexToDef);
+            if(_gameManager.enemyCards[finalCardIndex]._cardType == CardSetUp.CARD_TYPE.BOMB)
+            {
+                GameObject[] agentList = FindGameObjectsInLayer("Agents");
+                float minDistance = Mathf.Infinity;
+                GameObject finalPositionObject = null;
+
+                if (agentList != null)
+                {
+                    foreach (var agentGameobject in agentList)
+                    {
+
+                        float distance = Vector3.Distance(_gameManager.enemyTowers[towerIndexToDef].transform.position, agentGameobject.transform.position);
+                            
+                        if(distance < minDistance)
+                        {
+                            minDistance = distance;
+                            finalPositionObject = agentGameobject;
+                        }
+                        
+                    }
+                    _gameManager.PlayCard(finalCardIndex, finalPositionObject);
+
+
+                }
+            }
+            else
+            {
+                _gameManager.PlayCard(finalCardIndex, towerIndexToDef);
+            }
+           
 
             //_gameManager.iaStatsText.text += "\nTorre a defender: " + towerIndexToDef.ToString();
             //Spawnea la carta en el sitio
@@ -78,5 +107,20 @@ public class TaskCounterAtack : TreeNode
 
         state = TreeNodeState.RUNNING;
         return state;
+    }
+
+    private GameObject[] FindGameObjectsInLayer(string layer)
+    {
+        GameObject[] objectsInScene = (GameObject[])Object.FindObjectsOfType(typeof(GameObject));
+        List<GameObject> objectsInLayer = new List<GameObject>();
+
+        for (int i = 0; i < objectsInScene.Length; i++)
+        {
+            if (objectsInScene[i].layer == LayerMask.NameToLayer(layer)) objectsInLayer.Add(objectsInScene[i]);
+        }
+
+        if (objectsInLayer.Count == 0) return null;
+
+        return objectsInLayer.ToArray();
     }
 }
