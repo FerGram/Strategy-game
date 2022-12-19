@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class Tower : MonoBehaviour
@@ -131,10 +130,10 @@ public class Tower : MonoBehaviour
         return objectsInLayer.ToArray();
     }
 
-    void OnDrawGizmos()
+   /* void OnDrawGizmos()
     {
         Handles.Label(transform.position, threatLevel.ToString());
-    }
+    }*/
 }
 
 

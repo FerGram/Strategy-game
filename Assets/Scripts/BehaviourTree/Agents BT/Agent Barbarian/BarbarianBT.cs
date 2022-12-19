@@ -15,7 +15,7 @@ public class BarbarianBT : AgentBT
             
             new Sequence(new List<TreeNode>
             {
-                new CheckIsTargetLayerEmpty("Agents"),
+                new CheckIsTargetLayerEmpty(agent, "Agents"),
                 new CheckEntityInRange(agent, attackRange, LayerMask.GetMask("Agents")),
                 new TaskAttackEntity(agent, attackDamage, timeBetweenAttacks, animator),
             }),
@@ -23,7 +23,7 @@ public class BarbarianBT : AgentBT
 
             new Sequence(new List<TreeNode>
             {
-                new CheckIsTargetLayerEmpty("Buildings"),
+                new CheckIsTargetLayerEmpty(agent, "Buildings"),
                 new CheckEntityInRange(agent, attackRange, LayerMask.GetMask("Buildings")),
                 new TaskAttackEntity(agent, attackDamage, timeBetweenAttacks, animator),
             }),

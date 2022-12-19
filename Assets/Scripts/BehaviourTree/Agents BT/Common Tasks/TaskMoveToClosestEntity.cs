@@ -33,7 +33,8 @@ public class TaskMoveToClosestEntity : TreeNode
         }
 
         EntityHealth[] damageableEntities = GameObject.FindObjectsOfType<EntityHealth>();
-
+        
+        
         if (damageableEntities.Length > 0)
         {
             Vector2 agentPos = _agent.transform.position;
@@ -71,6 +72,7 @@ public class TaskMoveToClosestEntity : TreeNode
                     _currentTarget = minDistanceEntity.transform.position;
                 }
 
+
                 FaceTarget(minDistanceEntity);
 
                 _agent.targetTower = minDistanceEntity.gameObject;
@@ -81,6 +83,10 @@ public class TaskMoveToClosestEntity : TreeNode
         }
         _currentTarget = _infinityVector;
         return TreeNodeState.FAILURE;
+
+
+
+
     }
 
     private void FaceTarget(EntityHealth target)

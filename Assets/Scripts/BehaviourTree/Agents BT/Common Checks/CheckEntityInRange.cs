@@ -60,7 +60,7 @@ public class CheckEntityInRange : TreeNode
 
                     parent.SetData("Target", minDistanceEntity);
                     _currentTarget = minDistanceEntity;
-
+                    Debug.Log("He encontrado una entidad del tipo " + minDistanceEntity.gameObject.layer);
                     return TreeNodeState.SUCCESS;
                 }
             }

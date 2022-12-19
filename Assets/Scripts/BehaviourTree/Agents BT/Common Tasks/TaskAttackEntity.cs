@@ -31,7 +31,6 @@ public class TaskAttackEntity : TreeNode
         if (target != null && target.GetHealth() > 0)
         {
             FaceTarget(target);
-
             _agent.CancelNavigation();
 
             animator.SetBool("IsAttacking", true);
@@ -47,7 +46,7 @@ public class TaskAttackEntity : TreeNode
                     parent.ClearData("Target");
                     animator.SetBool("IsAttacking", false);
                     animator.SetBool("IsWalking", true);
-
+                    Debug.Log("He matado a una entidad del tipo " + target.gameObject.layer);
                     return TreeNodeState.SUCCESS;
                 }
             }
